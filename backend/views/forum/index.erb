@@ -1,0 +1,21 @@
+<div class="all_content">
+  <ul class="all_topics">
+    <% @top_posts.each do |post| %>
+      <li class="top_topic" >
+        <%= post_list(post) %>
+      </li>
+    <% end %>
+    <% @posts.each do |post| %>
+      <% if post.essence %>
+        <% liclass = "essence_topic"%>
+      <% else %>
+        <% liclass = "topic "%>
+      <% end %>
+      <li class="<%= liclass %>">
+        <%= post_list(post) %>
+      </li>
+    <% end %>
+    
+  </ul>
+  <%= will_paginate @posts ,next_label: "下一页" , previous_label: "上一页"%>
+</div>

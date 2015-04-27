@@ -1,0 +1,58 @@
+<div class="user_edit">
+  <p>个人资料修改:</p>
+  <div class="user_info_edit">
+    <form class="submit_form" action="/users" method="post" enctype="multipart/form-data"> 
+    <input type="hidden" name="_method" value="patch" />
+
+    <div>
+      <label for="user_fake">名字:</label> 
+      <% if @user.fake %>
+        <% name_value = "#{@user.fake}"%>
+      <% else %>
+        <% name_value = "#{@user.name}"%>
+      <% end %>
+      <input id="user_fake" name="user[fake]" type="text" value="<%= h(name_value) %>" />
+    </div>
+    <div>
+      <label for="user_avatar">头像:</label>
+      <input type="file" name="user[avatar]" id="user_avatar" />
+    </div>
+
+    <div>
+      <label for="user_email">Email:</label>
+      <input id="user_email" name="user[email]" disabled="disabled" type="text" value="<%=@user.email%>"/>
+    </div>
+
+    <div>
+      <label for="user_city">城市:</label>
+      <input type="text" name="user[city]" id="user_city" value="<%= h(@user.city)%>" />
+    </div>
+
+    <div>
+      <label for="user_info">个人介绍:</label>
+      <textarea name="user[info]" id="user_info" rows="8" cols="40"><%= h(@user.info) %></textarea>
+    </div>
+    <input class="submit_form" type="submit" value="修改资料" />
+
+    </form>
+  </div>
+
+  <p>密码修改:</p>
+  <div class=" user_info_edit user_password_edit">
+    <form class="submit_form" action="/users" method="post">
+      <input type="hidden" name="_method" value="patch" />
+
+      <div>
+        <label for="user_password">新密码:</label>
+        <input type="password" name="user[password]" id="user_password" />
+      </div>
+
+      <div>
+        <label for="user_password_confirmation">确认新密码:</label>
+        <input type="password" name="user[password_confirmation]" id="user_password_confirmation" />
+      </div>
+
+      <input class="submit_form" type="submit" value="修改密码" />
+    </form>
+  </div>
+</div>

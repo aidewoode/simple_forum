@@ -1,0 +1,17 @@
+/.bundle
+
+/db/.*sqlite3
+
+/log/*.log
+/tmp
+/tags
+/public/uploads/tmp
+
+doc/
+*.swp
+*~
+.DS_Store
+.project
+.idea
+*.db
+.ruby-version
