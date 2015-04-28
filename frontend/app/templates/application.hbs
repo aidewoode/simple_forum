@@ -1,3 +1,17 @@
-<h2 id="title">Welcome to Ember.js</h2>
-
-{{outlet}}
+<nav class="navbar navbar-fixed-top global_nav">
+  <div class="container-fluid">
+    <div class="navbar-brand navbar-left site_title" >
+      SimpleForum
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="/" id="home" >Home</a></li>
+      <li><a href="/about" id="about" >About</a></li>
+    </ul>
+  </div>
+</nav>
+<section class="index">
+  {{outlet}}
+</section>
+<footer class="container-fluid index">
+  <p>SimpleForum. Powered by <a target="_blank" href="http://www.sinatrarb.com">Sinatra</a> and  <a target="_blank" href="http://emberjs.com">Ember.js</a>. Source Code: <a target="_blank" href="https://github.com/aidewoode/simple_forum">Github</a></p>
+</footer>
