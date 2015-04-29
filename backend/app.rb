@@ -168,9 +168,10 @@ end
 # 
 #
 get "/" do
-  @top_posts = Post.where(top: true).order("last_reply_time DESC")
-  @posts = Post.where(top: false).paginate(page: params[:page], per_page: 10).order("last_reply_time DESC")
-  erb :"forum/index"
+  #@top_posts = Post.where(top: true).order("last_reply_time DESC")
+  #@posts = Post.where(top: false).paginate(page: params[:page], per_page: 10).order("last_reply_time DESC")
+  json Post.where(top: false).paginate(page: params[:page], per_page: 10).order("last_reply_time DESC")
+  #erb :"forum/index"
 end
 
 get "/topics/new" do
@@ -326,6 +327,13 @@ get "/account/:name" do
   else
     erb :"pages/404", layout: false 
   end
+end
+
+get "/users/:id" do
+  user = User.find(params[:id]).attributes
+  user.delete("password_digest")
+  user.delete("admin")
+  json user: user 
 end
 
 get "/account/:name/edit" do
