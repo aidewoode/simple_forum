@@ -1,0 +1,41 @@
+<div class="container all-contents">
+<ul class="list-group">
+  {{#each post in model}}
+  <li class="list-group-item {{post-class-name post}}">
+    {{#if post.commentsCount}}
+    <div class="pull-right reply">
+      <a href="#">{{post.commentsCount}}</a>
+    </div>
+    {{/if}}
+    <div class="pull-left avatar">
+      <img class="img-responsive"src={{post.userAvatar}} alt="avatar" >
+    </div>
+    <div class="content">
+      <div class="title">
+        {{#link-to index}}{{post.title}}{{/link-to}}
+      </div>
+      <div class="info">
+        {{#link-to index}}{{post.tag}}{{/link-to}}
+        <span>.</span>
+        {{#if post.commentsCount}}
+          <span>最后由</span>
+          {{#link-to index}}{{post.lastCommentUserName}}{{/link-to}}
+          <span>回复.</span>
+          {{date-format post.last_reply_time}}
+        {{else}}
+          <span>由</span>
+          {{#link-to index}}{{post.postUserName}}{{/link-to}}
+          <span>发表.</span>
+          {{date-format post.created_at}}
+        {{/if}}
+        
+      </div>
+    </div>
+    <div class="clearfix">
+      
+    </div>
+  </li>
+  <hr />
+  {{/each}}
+</ul>
+</div>

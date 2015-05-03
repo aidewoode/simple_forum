@@ -8,7 +8,11 @@ export default DS.Model.extend({
   essence: DS.attr("boolean", {defaultValue: false}),
   top: DS.attr("boolean", {defaultValue: false}),
   last_reply_time: DS.attr("date"),
+  commentsCount: DS.attr("number"),
+  userAvatar: DS.attr("string"),
+  postUserName: DS.attr("string"),
+  lastCommentUserName: DS.attr("string"),
 
   comments: DS.hasMany("comment"),
-  user: DS.belongsTo("user")
+  user: DS.belongsTo("user", {async: true})
 });

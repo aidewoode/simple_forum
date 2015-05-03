@@ -2,11 +2,18 @@
 nav.global_nav {
   background: #fff;
 }
+nav.global_nav a {
+  color: rgb(66,156,214);
+}
+
+nav.global_nav a:hover {
+  background: none;
+}
 
 section.index {
   min-height: 1000px;
   background: #eceef1;
-  padding-top: 60px;
+  padding-top: 100px;
 }
 
 footer.index {
@@ -21,5 +28,79 @@ footer.index p {
   font-style: italic;
   letter-spacing: 1px;
 }
+
+footer.index a {
+  color: rgb(66,156,214);
+}
+
+/* index page style */
+div.all-contents {
+  max-width: 750px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 6px;
+}
+
+div.all-contents hr {
+  margin-right: 70px;
+  margin-left: 70px;
+  border-style: dashed;
+}
+div.all-contents div.avatar {
+  margin-left: 10px;
+  margin-right: 15px;
+}
+
+div.all-contents div.avatar img {
+  width: 60px;
+  height: 60px;
+}
+
+div.all-contents ul li {
+  padding: 0;
+  border: none;
+  border-left-style: solid;
+  border-left-color: rgb(0, 218, 67);
+  border-left-width: 5px;
+  margin-bottom: 25px;
+}
+
+div.all-contents ul li:first-child {
+  border-radius: 0;
+}
+
+div.all-contents ul li:last-child {
+  border-radius: 0;
+}
+
+
+div.reply a {
+  margin: 15px 25px;
+  display: inline-block;
+  font-size: 1.5em;
+  color: rgb(66, 156, 214);
+}
+
+div.all-contents div.title {
+  font-size: 1.4em;
+}
+
+div.all-contents div.title a {
+  color: #066;
+}
+
+div.all-contents div.info {
+  color: #aaa;
+  font-size: 1.1em;
+  margin-top: 6px;
+}
+
+div.all-contents div.info a {
+  color: #555;
+  letter-spacing: 1.5px;
+  font-weight: 600;
+}
+
+
 
 

@@ -5,6 +5,7 @@ export default DS.Model.extend({
   updated_at: DS.attr("date"),
 
   post: DS.belongsTo("post"),
-  user: DS.belongsTo("user")
+  user: DS.belongsTo("user"),
+  notifications: DS.hasMany("notification")
   
 });
