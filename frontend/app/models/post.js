@@ -13,6 +13,6 @@ export default DS.Model.extend({
   postUserName: DS.attr("string"),
   lastCommentUserName: DS.attr("string"),
 
-  comments: DS.hasMany("comment"),
+  comments: DS.hasMany("comment", {async: true}),
   user: DS.belongsTo("user", {async: true})
 });

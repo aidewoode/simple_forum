@@ -13,6 +13,7 @@
     "loader.js": "ember-cli/loader.js#3.2.0",
     "qunit": "~1.17.1",
     "bootstrap": "3.3.4",
-    "moment": "~2.10.2"
+    "moment": "~2.10.2",
+    "Entry.css": "https://github.com/zmmbreeze/Entry.css.git#~1.7.2"
   }
 }

@@ -125,6 +125,7 @@ get "/posts" do
   posts = []
   Post.all.each do |post|
     post_hash = post.custom_serialize("user_id")
+    post_hash.store("comments", post.comment_ids)
     # add commentsCount key to avoid ember send too much request to count the number of 
     # a post's comments
     #
@@ -146,13 +147,13 @@ end
 get "/posts/:id" do
   if (post = Post.find_by_id(params[:id]))
     comments = post.comments
-    comments_array = comments.map {|comment| comment.custom_serialize("post_id","user_id")}
 
     post_hash = post.custom_serialize("user_id")
+    post_hash.store("userAvatar", post.user.avatar_url)
     post_hash.store("comments", post.comment_ids)
+    post_hash.store("postUserName", post.user.name)
 
     output_hash = {post: post_hash} 
-    output_hash.store("comments", comments_array)
 
     json output_hash
   else
@@ -194,6 +195,8 @@ get "/comments/:id" do
     notifications_array = notifications.map {|noti| noti.custom_serialize("user_id", "comment_id")}
 
     comment_hash = comment.custom_serialize("post_id", "user_id")
+    comment_hash.store("userAvatar", comment.user.avatar_url)
+    comment_hash.store("commentUserName", comment.user.name)
     comment_hash.store("notifications", comment.notification_ids)
 
     output_hash = {comment: comment_hash}
