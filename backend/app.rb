@@ -123,7 +123,8 @@ end
 #
 get "/posts" do
   posts = []
-  Post.all.each do |post|
+  totalPost = Post.paginate(:page => params[:page], :per_page => 10)
+  totalPost.each do |post|
     post_hash = post.custom_serialize("user_id")
     post_hash.store("comments", post.comment_ids)
     # add commentsCount key to avoid ember send too much request to count the number of 
@@ -139,6 +140,7 @@ get "/posts" do
   end
 
   output_hash = {posts: posts}
+  output_hash.store("meta", {total_pages: totalPost.total_pages})
 
   json output_hash
 

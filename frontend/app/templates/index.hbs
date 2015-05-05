@@ -1,5 +1,5 @@
 <div class="container all-contents">
-  <ul class="list-group">
+  <ul class="content-list list-group">
     {{#each post in arrangedContent}}
     <li class="list-group-item {{post-class-name post}}">
       {{#if post.commentsCount}}
@@ -12,7 +12,7 @@
       </div>
         <div class="content">
           <div class="title">
-            {{#link-to "posts" post}}{{post.title}}{{/link-to}}
+            {{#link-to "posts.comments" post}}{{post.title}}{{/link-to}}
           </div>
           <div class="info">
             {{#link-to index}}{{post.tag}}{{/link-to}}
@@ -38,4 +38,6 @@
     <hr />
     {{/each}}
   </ul>
+
+  {{page-numbers content=content}}
 </div>

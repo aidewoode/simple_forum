@@ -57,7 +57,7 @@ div.all-contents div.avatar img {
   height: 60px;
 }
 
-div.all-contents ul li {
+div.all-contents ul.content-list li {
   padding: 0;
   border: none;
   border-left-style: solid;
@@ -66,11 +66,11 @@ div.all-contents ul li {
   margin-bottom: 25px;
 }
 
-div.all-contents ul li:first-child {
+div.all-contents ul.content-list li:first-child {
   border-radius: 0;
 }
 
-div.all-contents ul li:last-child {
+div.all-contents ul.content-list li:last-child {
   border-radius: 0;
 }
 
@@ -101,6 +101,27 @@ div.all-contents div.info a {
   letter-spacing: 1.5px;
   font-weight: 600;
 }
+
+div.all-contents div.pagination-centered {
+  text-align: center;
+}
+
+div.all-contents ul.pagination li a{
+  border: none;
+  color: #0c6;
+  font-size: 1.2em;
+}
+
+div.all-contents ul.pagination li.disabled a {
+  color: #555;
+}
+
+div.all-contents ul.pagination li.active a {
+  font-weight: 600;
+  color: #555;
+  background-color: #fff;
+}
+
 
 /* post page style*/
 
