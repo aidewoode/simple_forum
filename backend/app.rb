@@ -149,9 +149,10 @@ end
 get "/posts/:id" do
   if (post = Post.find_by_id(params[:id]))
     comments = post.comments
-
+    
     post_hash = post.custom_serialize("user_id")
     post_hash.store("userAvatar", post.user.avatar_url)
+    post_hash.store("commentsCount", post.comments.count)
     post_hash.store("comments", post.comment_ids)
     post_hash.store("postUserName", post.user.name)
 
@@ -174,6 +175,8 @@ get "/users/:id" do
 
     user_hash = user.custom_serialize
     user_hash.store("notifications", user.notification_ids)
+    user_hash.store("posts", user.post_ids)
+    user_hash.store("comments", user.comment_ids)
     user_hash.delete("password_digest")
     user_hash.delete("admin")
     user_hash["avatar"] = user.avatar_url
@@ -199,6 +202,7 @@ get "/comments/:id" do
     comment_hash = comment.custom_serialize("post_id", "user_id")
     comment_hash.store("userAvatar", comment.user.avatar_url)
     comment_hash.store("commentUserName", comment.user.name)
+    comment_hash.store("commentPostName", comment.post.title)
     comment_hash.store("notifications", comment.notification_ids)
 
     output_hash = {comment: comment_hash}

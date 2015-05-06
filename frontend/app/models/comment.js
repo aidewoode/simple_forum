@@ -5,6 +5,7 @@ export default DS.Model.extend({
   updated_at: DS.attr("date"),
   userAvatar: DS.attr("string"),
   commentUserName: DS.attr("string"),
+  commentPostName: DS.attr("string"),
 
   post: DS.belongsTo("post"),
   user: DS.belongsTo("user"),

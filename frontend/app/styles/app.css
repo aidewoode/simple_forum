@@ -1,6 +1,7 @@
 /* layout style */
 nav.global_nav {
   background: #fff;
+  opacity: 0.99;
 }
 nav.global_nav a {
   color: rgb(66,156,214);
@@ -61,9 +62,17 @@ div.all-contents ul.content-list li {
   padding: 0;
   border: none;
   border-left-style: solid;
-  border-left-color: rgb(0, 218, 67);
+  border-left-color: rgb(66, 156, 214);
   border-left-width: 5px;
   margin-bottom: 25px;
+}
+
+div.all-contents ul.content-list li.essense-post {
+  border-color: rgb(255, 193, 0);
+}
+
+div.all-contents ul.content-list li.top-post {
+  border-color: rgb(0, 218, 67);
 }
 
 div.all-contents ul.content-list li:first-child {
@@ -108,7 +117,7 @@ div.all-contents div.pagination-centered {
 
 div.all-contents ul.pagination li a{
   border: none;
-  color: #0c6;
+  color: rgb(66, 156, 214);
   font-size: 1.2em;
 }
 
@@ -126,8 +135,17 @@ div.all-contents ul.pagination li.active a {
 /* post page style*/
 
 div.post-title {
-  border-left: 5px solid rgb(0, 218, 67);
+  border-left: 5px solid rgb(66, 156, 214);
 }
+
+div.essense-post {
+  border-color: rgb(255, 193, 0);
+}
+
+div.top-post {
+  border-color: rgb(0, 218, 67);
+}
+
 
 div.post-title h1 {
   margin: 0;
@@ -188,3 +206,99 @@ li.comment div.comment-info a {
   font-weight: 600;
 }
 
+/* user page style*/
+
+div.user-header {
+  padding: 6px; 
+  background-color: rgb(66, 156, 214);
+  border-radius: 6px;
+  color: #fff;
+}
+
+div.user-header div.user-name {
+  font-size: 1.3em;
+  margin-left: 5px;
+}
+
+div.user-header div.user-info {
+  margin-right: 5px;
+  margin-top: 5px;
+}
+
+div.user-header div.since-date {
+  margin-top: 5px;
+}
+
+ul.user-detail li {
+  border: none;
+}
+
+ul.user-detail li span {
+  font-weight: 600;
+  margin-right: 5px;
+}
+
+ul.user-detail hr {
+  margin: 5px 10px;
+}
+
+div.user-notifications {
+  padding-top: 20px;
+}
+
+div.user-notifications div.notification-number {
+  font-size: 1.1em;
+  font-weight: 600;
+  color: rgb(66, 156, 214);
+  margin-bottom: 10px;
+}
+
+div.user-notifications ul li {
+  border: none;
+  background-color: rgba(255, 193, 0, 0.65);
+  color: #fff;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  box-shadow: 0 1px 1px #eee;
+
+}
+
+div.user-content {
+  padding-top: 20px;
+}
+
+div.user-content > div {
+  font-size: 1.1em;
+  font-weight: 600;
+  color: rgb(66, 156, 214);
+  margin-bottom: 10px;
+}
+
+div.user-content ul {
+  background-color: #eee;
+  border: 1px solid #eee;
+  border-radius: 6px;
+}
+
+div.user-content ul li {
+  border: none;
+  background-color: transparent;
+  color: #066;
+}
+
+div.user-content ul li span {
+  font-weight: 600;
+  color: #555;
+}
+
+
+div.user-content div.list-group-item-heading {
+  color: #066;
+  font-weight: 600;
+}
+
+div.user-content hr {
+  border-color: #fff;
+  margin: 15px 50px;
+  
+}

@@ -1,0 +1,78 @@
+<div class="container all-contents">
+<div class="panel panel-default user-header">
+  <div class="pull-left avatar">
+    <img class="img-responsive img-circle" src="{{model.avatar}}" alt="avatar" />
+  </div>
+  <div class="pull-left user-name">
+    {{model.name}}
+  </div>
+  <div class="user-info pull-right">
+    <div class="numbers">
+      第{{model.id}} 位会员
+    </div>
+    <div class="since-date">
+      {{date-format model.created_at}}
+    </div>
+  </div>
+  <div class="clearfix"> </div>
+</div>
+<ul class="user-detail list-group">
+  <li class="list-group-item"><span>Name:</span> {{model.name}}</li>
+  <hr />
+  <li class="list-group-item"><span>Email:</span> {{model.email}}</li>
+  <hr />
+  <li class="list-group-item"><span>City:</span> {{model.city}}</li>
+  <hr />
+  <li class="list-group-item"><span>Info:</span> {{model.info}}</li>
+  <hr />
+
+</ul>
+<div class="container-fluid user-notifications">
+  <div class="notification-number">You have {{model.notifications.length}} notifications :</div>
+  {{#if model.notifications.length}}
+  <ul class="list-group">
+    {{#each noti in model.notifications}}
+      <li class="list-group-item">
+        {{#if noti.atwho}}
+        你在文章{{noti.post_name}}的回复，被{{noti.user_name}}@了
+        {{else}}
+        你的文章{{noti.post_name}}，被{{noti.user_name}}回复了
+        {{/if}}
+      </li>
+    {{/each}}
+    
+  </ul>
+  {{/if}}
+  
+</div>
+
+{{#if model.posts.length}}
+<div class="container-fluid user-content ">
+  <div> Post List:</div>
+  <ul class="list-group">
+    {{#each post in model.posts}}
+      <li class="list-group-item">{{post.title}}<span>.{{post.commentsCount}}comments</span></li>
+      <hr />
+    {{/each}}
+  </ul>
+</div>
+{{/if}}
+
+{{#if model.comments.length}}
+<div class="container-fluid user-content">
+  <div>Comment list: </div>
+  <ul class="list-group">
+    {{#each comment in model.comments}}
+      <li class="list-group-item">
+        <div class="list-group-item-heading">{{comment.commentPostName}} </div>
+        <div class="list-group-item-text entry">
+          {{comment.body}}
+        </div>
+      </li>
+      <hr />
+    {{/each}}
+  </ul>
+  
+</div>
+{{/if}}
+</div>

@@ -11,8 +11,8 @@ export default DS.Model.extend({
   avatar: DS.attr("string"),
   fake: DS.attr("string"),
 
-  posts: DS.hasMany("post"),
-  comments: DS.hasMany("comment"),
-  notifications: DS.hasMany("notification")
+  posts: DS.hasMany("post", {async: true}),
+  comments: DS.hasMany("comment", {async: true}),
+  notifications: DS.hasMany("notification", {async: true})
 
 });
