@@ -123,20 +123,29 @@ end
 #
 get "/posts" do
   posts = []
-  totalPost = Post.paginate(:page => params[:page], :per_page => 10)
-  totalPost.each do |post|
-    post_hash = post.custom_serialize("user_id")
-    post_hash.store("comments", post.comment_ids)
-    # add commentsCount key to avoid ember send too much request to count the number of 
-    # a post's comments
-    #
-    post_hash.store("commentsCount", post.comments.count)
-    post_hash.store("userAvatar", post.user.avatar_url)
-    post_hash.store("postUserName", post.user.name)
-    if post.comments.last
-      post_hash.store("lastCommentUserName", post.comments.last.user.name)
+  if user = User.find_by_name(params[:user_name])
+    totalPost = user.posts.paginate(:page => params[:page], :per_page => 10)
+    totalPost.each do |post|
+      post_hash = post.custom_serialize("user_id")
+      post_hash.store("commentsCount", post.comments.count)
+      posts.push(post_hash)
     end
-    posts.push(post_hash)
+  else
+    totalPost = Post.paginate(:page => params[:page], :per_page => 10)
+    totalPost.each do |post|
+      post_hash = post.custom_serialize("user_id")
+      post_hash.store("comments", post.comment_ids)
+      # add commentsCount key to avoid ember send too much request to count the number of 
+      # a post's comments
+      #
+      post_hash.store("commentsCount", post.comments.count)
+      post_hash.store("userAvatar", post.user.avatar_url)
+      post_hash.store("postUserName", post.user.name)
+      if post.comments.last
+        post_hash.store("lastCommentUserName", post.comments.last.user.name)
+      end
+      posts.push(post_hash)
+    end
   end
 
   output_hash = {posts: posts}
@@ -168,8 +177,8 @@ end
 # user routes
 
 
-get "/users/:id" do
-  if (user = User.find_by_id(params[:id]))
+get "/users/:user_name" do
+  if (user = User.find_by_name(params[:user_name]))
     notifications = user.notifications
     notifications_array = notifications.map {|noti| noti.custom_serialize("user_id", "comment_id")}
 
@@ -194,6 +203,33 @@ end
 
 #comment routes
 #
+#
+get "/comments" do
+  comments = []
+  if (post = Post.find_by_id(params[:post_id]))
+    totalComment = post.comments.paginate(:page => params[:page], :per_page => 10)
+    totalComment.each do |comment|
+      comment_hash = comment.custom_serialize("user_id", "post_id")
+      comment_hash.store("userAvatar", comment.user.avatar_url)
+      comment_hash.store("commentUserName", comment.user.name)
+      comment_hash.store("commentPostName", comment.post.title)
+      comments.push(comment_hash)
+    end
+
+  elsif user = User.find_by_name(params[:user_name])
+    totalComment = user.comments.paginate(:page => params[:page], :per_page => 10)
+    totalComment.each do |comment|
+      comment_hash = comment.custom_serialize("user_id", "post_id")
+      comment_hash.store("commentPostName", comment.post.title)
+      comments.push(comment_hash)
+    end
+  end
+  output_hash = {comments: comments}
+  output_hash.store("meta", {total_pages: totalComment.total_pages})
+
+  json output_hash
+end
+
 get "/comments/:id" do
   if (comment = Comment.find_by_id(params[:id]))
     notifications = comment.notifications

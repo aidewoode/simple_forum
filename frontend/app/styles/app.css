@@ -267,13 +267,6 @@ div.user-content {
   padding-top: 20px;
 }
 
-div.user-content > div {
-  font-size: 1.1em;
-  font-weight: 600;
-  color: rgb(66, 156, 214);
-  margin-bottom: 10px;
-}
-
 div.user-content ul {
   background-color: #eee;
   border: 1px solid #eee;
@@ -301,4 +294,22 @@ div.user-content hr {
   border-color: #fff;
   margin: 15px 50px;
   
+}
+
+div.user-tab {
+  margin-top: 20px;
+}
+
+div.user-tab > ul {
+  border-bottom: 1px dashed #eee;
+}
+
+div.user-tab > ul li a {
+  color: rgb(66, 156, 214);
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+div.user-tab > ul li a.active {
+  background-color: #eee;
 }

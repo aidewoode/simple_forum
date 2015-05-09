@@ -45,34 +45,12 @@
   {{/if}}
   
 </div>
+  <div class="container-fluid user-tab">
+    <ul class="nav nav-tabs" >
+      <li role="presentation">{{#link-to "users.posts"}}Post List {{/link-to}}</li>
+      <li role="presentation">{{#link-to "users.comments"}}Comments List{{/link-to}}</li>
+    </ul>
+    {{outlet}}
+  </div>
+</div>
 
-{{#if model.posts.length}}
-<div class="container-fluid user-content ">
-  <div> Post List:</div>
-  <ul class="list-group">
-    {{#each post in model.posts}}
-      <li class="list-group-item">{{post.title}}<span>.{{post.commentsCount}}comments</span></li>
-      <hr />
-    {{/each}}
-  </ul>
-</div>
-{{/if}}
-
-{{#if model.comments.length}}
-<div class="container-fluid user-content">
-  <div>Comment list: </div>
-  <ul class="list-group">
-    {{#each comment in model.comments}}
-      <li class="list-group-item">
-        <div class="list-group-item-heading">{{comment.commentPostName}} </div>
-        <div class="list-group-item-text entry">
-          {{comment.body}}
-        </div>
-      </li>
-      <hr />
-    {{/each}}
-  </ul>
-  
-</div>
-{{/if}}
-</div>

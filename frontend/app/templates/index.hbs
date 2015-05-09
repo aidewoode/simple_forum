@@ -19,12 +19,12 @@
             <span>.</span>
             {{#if post.commentsCount}}
             <span>最后由</span>
-            {{#link-to index}}{{post.lastCommentUserName}}{{/link-to}}
+            {{#link-to "users.posts" post.lastCommentUserName}}{{post.lastCommentUserName}}{{/link-to}}
             <span>回复.</span>
             {{date-format post.last_reply_time}}
             {{else}}
             <span>由</span>
-            {{#link-to index}}{{post.postUserName}}{{/link-to}}
+            {{#link-to "users.posts" post.postUserName}}{{post.postUserName}}{{/link-to}}
             <span>发表.</span>
             {{date-format post.created_at}}
             {{/if}}
@@ -39,5 +39,5 @@
     {{/each}}
   </ul>
 
-  {{page-numbers content=content}}
+   {{page-numbers content=content}} 
 </div>

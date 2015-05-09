@@ -1,0 +1,11 @@
+{{#if model.length}}
+<div class="container-fluid user-content ">
+  <ul class="list-group">
+    {{#each post in model}}
+      <li class="list-group-item">{{post.title}}<span>.{{post.commentsCount}}comments</span></li>
+      <hr />
+    {{/each}}
+  </ul>
+</div>
+  {{page-numbers content=content}}
+{{/if}}
