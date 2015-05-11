@@ -13,10 +13,6 @@ require "i18n/backend/fallbacks"
 require "sanitize"
 require "./environments"
 
-enable :sessions
-
-set :session_secret, "super secret"
-
 module CustomSerializer # need to improve
   def custom_serialize(*replace_list)
     attributes = self.attributes #return a hash
@@ -93,8 +89,13 @@ class User < ActiveRecord::Base
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :notifications, dependent: :destroy
+  has_many :session_tokens, dependent: :destroy
 
   has_secure_password
+
+  def session_active_token
+    session_tokens.active.first_or_create
+  end
 end
 
 class Comment < ActiveRecord::Base
@@ -118,12 +119,34 @@ class Notification < ActiveRecord::Base
   belongs_to :comment
 end
 
+# use redis to store user's sessions
 
+class SessionToken < ActiveRecord::Base
+  include CustomSerializer
+
+  before_create :generate_access_token, :set_expiry_date
+  belongs_to :user
+
+  scope :active, -> { where("expired_at >= ?", Time.now)}
+
+  private
+
+  def generate_access_token
+    begin
+      self.access_token = SecureRandom.hex
+    end while self.class.exists?(access_token: access_token)
+  end
+
+  def set_expiry_date
+    self.expired_at = 5.hours.from_now
+  end
+
+end
 ## post routes
 #
 get "/posts" do
   posts = []
-  if user = User.find_by_name(params[:user_name])
+  if user = User.find_by_id(params[:user_id])
     totalPost = user.posts.paginate(:page => params[:page], :per_page => 10)
     totalPost.each do |post|
       post_hash = post.custom_serialize("user_id")
@@ -131,7 +154,7 @@ get "/posts" do
       posts.push(post_hash)
     end
   else
-    totalPost = Post.paginate(:page => params[:page], :per_page => 10)
+    totalPost = Post.paginate(:page => params[:page], :per_page => 10).order("last_reply_time DESC")
     totalPost.each do |post|
       post_hash = post.custom_serialize("user_id")
       post_hash.store("comments", post.comment_ids)
@@ -141,6 +164,7 @@ get "/posts" do
       post_hash.store("commentsCount", post.comments.count)
       post_hash.store("userAvatar", post.user.avatar_url)
       post_hash.store("postUserName", post.user.name)
+      post_hash.store("user_id", post.user.id)
       if post.comments.last
         post_hash.store("lastCommentUserName", post.comments.last.user.name)
       end
@@ -164,6 +188,7 @@ get "/posts/:id" do
     post_hash.store("commentsCount", post.comments.count)
     post_hash.store("comments", post.comment_ids)
     post_hash.store("postUserName", post.user.name)
+    post_hash.store("user_id", post.user.id)
 
     output_hash = {post: post_hash} 
 
@@ -177,8 +202,8 @@ end
 # user routes
 
 
-get "/users/:user_name" do
-  if (user = User.find_by_name(params[:user_name]))
+get "/users/:id" do
+  if (user = User.find_by_id(params[:id]))
     notifications = user.notifications
     notifications_array = notifications.map {|noti| noti.custom_serialize("user_id", "comment_id")}
 
@@ -216,7 +241,7 @@ get "/comments" do
       comments.push(comment_hash)
     end
 
-  elsif user = User.find_by_name(params[:user_name])
+  elsif user = User.find_by_id(params[:user_id])
     totalComment = user.comments.paginate(:page => params[:page], :per_page => 10)
     totalComment.each do |comment|
       comment_hash = comment.custom_serialize("user_id", "post_id")
@@ -264,3 +289,16 @@ get "/notifications/:id" do
     halt 404, json({})
   end
 end
+
+#session route
+#
+post "/session" do
+  user = User.find_by_email(params[:email])
+  if user && user.authenticate(params[:password])
+    halt 201, json({token: user.session_active_token})
+  else
+    halt 401, json({})
+  end
+end
+
+

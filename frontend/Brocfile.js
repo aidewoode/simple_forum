@@ -22,4 +22,6 @@ app.import("bower_components/bootstrap/dist/css/bootstrap.css");
 app.import("bower_components/Entry.css/bin/entry.css");
 app.import("bower_components/bootstrap/dist/js/bootstrap.js");
 app.import("bower_components/moment/moment.js");
+app.import("bower_components/js-cookie/src/js.cookie.js");
+app.import("bower_components/ember-localstorage-adapter/localstorage_adapter.js");
 module.exports = app.toTree();

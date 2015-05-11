@@ -27,4 +27,6 @@ configure :production do
     :database => db.path[1..-1],
     :encoding => 'utf8'
   )
+
+  Ohm.redis = Redic.new(ENV['REDIS_URL'])
 end

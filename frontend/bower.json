@@ -14,6 +14,10 @@
     "qunit": "~1.17.1",
     "bootstrap": "3.3.4",
     "moment": "~2.10.2",
-    "Entry.css": "https://github.com/zmmbreeze/Entry.css.git#~1.7.2"
+    "Entry.css": "https://github.com/zmmbreeze/Entry.css.git#~1.7.2",
+    "ember-localstorage-adapter": "~0.5.3"
+  },
+  "devDependencies": {
+    "js-cookie": "~1.5.1"
   }
 }

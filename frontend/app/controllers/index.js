@@ -1,9 +1,8 @@
 import Ember from "ember"; 
-import pagedArray from "ember-cli-pagination/computed/paged-array";
 
 export default Ember.ArrayController.extend({
   sortProperties: ["last_reply_time"],
-  sortAscending: false,
+  sortAscending: true,
 
 
   queryParams: ["page", "perPage"],

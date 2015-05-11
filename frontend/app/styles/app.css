@@ -3,8 +3,18 @@ nav.global_nav {
   background: #fff;
   opacity: 0.99;
 }
+
+nav.global_nav > div {
+  padding-left: 25px;
+  padding-right: 25px;
+}
 nav.global_nav a {
   color: rgb(66,156,214);
+  outline: none;
+}
+
+nav.global_nav a:focus {
+  background: none;
 }
 
 nav.global_nav a:hover {
@@ -312,4 +322,44 @@ div.user-tab > ul li a {
 
 div.user-tab > ul li a.active {
   background-color: #eee;
+}
+
+/* modal login page style*/
+.signup-login-form form input {
+  border-radius: 10px;
+  box-shadow: none;
+  background-color: rgb(251, 251, 251);
+  border-color: #eee;
+}
+
+.signup-login-form form input:focus {
+  background-color: #eee;
+  border-color: #eee;
+  box-shadow: none;
+}
+
+.signup-login-form form button {
+  margin-top: 35px; 
+  border-radius: 10px;
+  background-color: rgb(66 , 156, 214);
+  color: #fff;
+}
+
+.signup-login-form form button:focus {
+  /* change the default bootstrap style*/
+  outline: none;
+}
+
+.signup-login-form form button:hover {
+  /* change the default bootstrap style*/
+  color: #fff;
+  opacity: 0.85;
+}
+
+.modal-header {
+  border-bottom-style: dashed;
+}
+
+.modal-footer {
+  border-top-style: dashed;
 }

@@ -12,6 +12,7 @@ export default DS.Model.extend({
   userAvatar: DS.attr("string"),
   postUserName: DS.attr("string"),
   lastCommentUserName: DS.attr("string"),
+  user_id: DS.attr("number"),
 
   comments: DS.hasMany("comment", {async: true}),
   user: DS.belongsTo("user", {async: true})
