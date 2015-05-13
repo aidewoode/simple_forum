@@ -8,7 +8,7 @@
   <div class="post-info">
     {{#link-to index}}{{model.tag}}{{/link-to}}
     <span>由</span>
-    {{#link-to "users.posts" model.postUserName}}{{model.postUserName}}{{/link-to}}
+    {{#link-to "user.posts" model.postUserName}}{{model.postUserName}}{{/link-to}}
     <span>发表.</span>
     {{date-format model.created_at}}
 

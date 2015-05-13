@@ -3,7 +3,7 @@ import PagedRemoteArray from "ember-cli-pagination/remote/paged-remote-array";
 
 export default Ember.Route.extend({
   model: function(params, transition) {
-    var post_id = transition.params.posts.id;
+    var post_id = transition.params.post.id;
     return PagedRemoteArray.create({modelName: "comment",
                                    store: this.store,
                                    page: 1,

@@ -9,7 +9,7 @@
         <img class="img-responsive img-circle" src="{{comment.userAvatar}}" alt="avatar" />
       </div>
       <div class="comment-info">
-        {{#link-to "users.posts" comment.commentUserName}}{{comment.commentUserName}}{{/link-to}}
+        {{#link-to "user.posts" comment.user_id}}{{comment.commentUserName}}{{/link-to}}
         <span>.{{date-format comment.created_at}}</span>
       </div>
       <div class="entry comment-content">

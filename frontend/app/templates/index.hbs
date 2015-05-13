@@ -12,19 +12,19 @@
       </div>
         <div class="content">
           <div class="title">
-            {{#link-to "posts.comments" post}}{{post.title}}{{/link-to}}
+            {{#link-to "post.comments" post}}{{post.title}}{{/link-to}}
           </div>
           <div class="info">
             {{#link-to index}}{{post.tag}}{{/link-to}}
             <span>.</span>
             {{#if post.commentsCount}}
             <span>最后由</span>
-            {{#link-to "users.posts" post.user_id}}{{post.lastCommentUserName}}{{/link-to}}
+            {{#link-to "user.posts" post.user_id}}{{post.lastCommentUserName}}{{/link-to}}
             <span>回复.</span>
             {{date-format post.last_reply_time}}
             {{else}}
             <span>由</span>
-            {{#link-to "users.posts" post.user_id}}{{post.postUserName}}{{/link-to}}
+            {{#link-to "user.posts" post.user_id}}{{post.postUserName}}{{/link-to}}
             <span>发表.</span>
             {{date-format post.created_at}}
             {{/if}}

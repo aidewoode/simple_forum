@@ -10,12 +10,14 @@
     <ul class="nav navbar-nav navbar-right">
       <li><a href="#" data-toggle="modal" data-target="#signupForm">Signup</a></li>
       <li><a href="#" data-toggle="modal" data-target="#loginForm">Login</a></li>
+      <li><a href="#" data-toggle="modal" data-target="#newPostForm">Test</a></li>
     </ul>
   </div>
 </nav>
 <section class="index">
   {{render "signup"}}
   {{render "login" }}
+  {{render "posts.new"}}
   {{outlet}}
 </section>
 <footer class="container-fluid index">

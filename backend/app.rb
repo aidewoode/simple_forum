@@ -198,6 +198,20 @@ get "/posts/:id" do
   end
 end
 
+post "/posts" do
+  request.body.rewind
+  data = JSON.parse request.body.read
+  # need add post and user's relationship
+  #
+  post = Post.new(data["post"])
+  if post.save
+    halt 201, json({})
+  else
+    halt 422 ,json({errors: user.errors.full_messages})
+  end
+
+end
+
 
 # user routes
 
@@ -225,6 +239,18 @@ get "/users/:id" do
 
 end
 
+post "/users" do
+  request.body.rewind
+  data = JSON.parse request.body.read
+  user = User.new(data["user"].delete_if {|key, value| key == "admin"})
+  if user.save
+    halt 201, json({token: user.session_active_token})
+  else
+    halt 422 ,json({errors: user.errors.full_messages})
+  end
+
+end
+
 
 #comment routes
 #
@@ -238,6 +264,7 @@ get "/comments" do
       comment_hash.store("userAvatar", comment.user.avatar_url)
       comment_hash.store("commentUserName", comment.user.name)
       comment_hash.store("commentPostName", comment.post.title)
+      comment_hash.store("user_id", comment.user.id)
       comments.push(comment_hash)
     end
 
@@ -264,6 +291,7 @@ get "/comments/:id" do
     comment_hash.store("userAvatar", comment.user.avatar_url)
     comment_hash.store("commentUserName", comment.user.name)
     comment_hash.store("commentPostName", comment.post.title)
+    comment_hash.store("user_id", comment.user.id)
     comment_hash.store("notifications", comment.notification_ids)
 
     output_hash = {comment: comment_hash}

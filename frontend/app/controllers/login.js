@@ -5,7 +5,7 @@ export default Ember.Controller.extend({
     this._super();
     if (Cookies.get("access_token")) {
       Ember.$.ajaxSetup({
-        headers: {"Authorization": "Bearer" + Cookies.get("access_token")}
+        headers: {"Authorization": "Bearer " + Cookies.get("access_token")}
       });
     }
   },

@@ -6,6 +6,7 @@ export default DS.Model.extend({
   userAvatar: DS.attr("string"),
   commentUserName: DS.attr("string"),
   commentPostName: DS.attr("string"),
+  user_id: DS.attr("number"),
 
   post: DS.belongsTo("post"),
   user: DS.belongsTo("user"),
