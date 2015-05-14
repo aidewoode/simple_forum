@@ -201,9 +201,20 @@ div.comments-number {
   margin-bottom: 30px;
 }
 
+
 ul.comments li.comment {
   border: none;
   margin-bottom: 30px;
+}
+
+li.comment div.reply a {
+  display: inline-block;
+  color: #aaa;
+  font-size: 1em;
+}
+
+li.comment div.reply a:focus {
+  outline: none;
 }
 
 li.comment div.comment-info {
@@ -215,6 +226,26 @@ li.comment div.comment-info {
 li.comment div.comment-info a {
   color: #555;
   font-weight: 600;
+}
+
+.normal-button {
+  border-color: rgb(66, 156, 214);
+  border-radius: 6px;
+  color: rgb(66, 156, 214);
+  border-width: 2px;
+}
+
+.normal-button:hover {
+  color: #fff;
+  background-color: rgb(66, 156, 214);
+  border-color: rgb(66, 156, 214);
+}
+
+.normal-button:focus {
+  outline: none;
+  background-color: rgb(66, 156, 214);
+  color: #fff;
+  border-color: rgb(66, 156, 214);
 }
 
 /* user page style*/

@@ -205,9 +205,10 @@ post "/posts" do
   #
   post = Post.new(data["post"])
   if post.save
-    halt 201, json({})
+    # return a new post and let ember to push it into store
+    halt 201, json({post: post}) 
   else
-    halt 422 ,json({errors: user.errors.full_messages})
+    halt 422 ,json({errors: post.errors.full_messages})
   end
 
 end
@@ -244,7 +245,7 @@ post "/users" do
   data = JSON.parse request.body.read
   user = User.new(data["user"].delete_if {|key, value| key == "admin"})
   if user.save
-    halt 201, json({token: user.session_active_token})
+    halt 201, json({token: user.session_active_token, user: user})
   else
     halt 422 ,json({errors: user.errors.full_messages})
   end
@@ -300,6 +301,18 @@ get "/comments/:id" do
     json output_hash
   else
     halt 404, json({})
+  end
+
+end
+
+post "/comments" do
+  request.body.rewind
+  data = JSON.parse request.body.read
+  comment = Comment.new(data["comment"])
+  if comment.save
+    halt 201, json({comment: comment})
+  else
+    halt 422 ,json({errors: comment.errors.full_messages})
   end
 
 end
