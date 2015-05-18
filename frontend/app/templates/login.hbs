@@ -16,12 +16,14 @@
           <div class="form-group">
             {{input value=password class="form-control" type="password" placeholder="Password"}}
           </div>
-          <button type="submit" class="btn btn-block">Login</button>
+          <button type="submit" data-loading-text="Login..." autocomplete="off" id="loginButton" class="btn btn-block">Login</button>
           
         </form>
       </div>
       <div class="modal-footer">
-        
+        {{#if hasError}}
+          {{errorMessage}}
+        {{/if}}
       </div>
 
     </div>

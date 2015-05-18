@@ -13,6 +13,24 @@ require "i18n/backend/fallbacks"
 require "sanitize"
 require "./environments"
 
+helpers do
+  def is_login?
+    access_token = request.cookies["access_token"]
+    if SessionToken.find_by_access_token(access_token)
+      true
+    else
+      false
+    end
+  end
+
+  def current_user
+    access_token = request.cookies["access_token"]
+    token = SessionToken.find_by_access_token(access_token)
+    token.user
+  end
+  
+end
+
 module CustomSerializer # need to improve
   def custom_serialize(*replace_list)
     attributes = self.attributes #return a hash
@@ -201,14 +219,16 @@ end
 post "/posts" do
   request.body.rewind
   data = JSON.parse request.body.read
-  # need add post and user's relationship
-  #
-  post = Post.new(data["post"])
-  if post.save
-    # return a new post and let ember to push it into store
-    halt 201, json({post: post}) 
+  if is_login?
+    post = current_user.posts.build(data["post"])
+    if post.save
+      # return a new post and let ember to push it into store
+      halt 201, json({post: post}) 
+    else
+      halt 422 ,json({errors: post.errors.full_messages})
+    end
   else
-    halt 422 ,json({errors: post.errors.full_messages})
+    halt 401 ,json({})
   end
 
 end
@@ -240,6 +260,28 @@ get "/users/:id" do
 
 end
 
+get "/users" do
+  if user = User.find_by_name(params[:name])
+    notifications = user.notifications
+    notifications_array = notifications.map {|noti| noti.custom_serialize("user_id", "comment_id")}
+
+    user_hash = user.custom_serialize
+    user_hash.store("notifications", user.notification_ids)
+    user_hash.store("posts", user.post_ids)
+    user_hash.store("comments", user.comment_ids)
+    user_hash.delete("password_digest")
+    user_hash.delete("admin")
+    user_hash["avatar"] = user.avatar_url
+
+    output_hash = {user: user_hash}
+    output_hash.store("notifications", notifications_array)
+
+    json output_hash
+  else
+    halt 404, json({})
+  end
+end
+
 post "/users" do
   request.body.rewind
   data = JSON.parse request.body.read
@@ -247,7 +289,7 @@ post "/users" do
   if user.save
     halt 201, json({token: user.session_active_token, user: user})
   else
-    halt 422 ,json({errors: user.errors.full_messages})
+    halt 422 ,json({error: user.errors.full_messages})
   end
 
 end
@@ -308,13 +350,16 @@ end
 post "/comments" do
   request.body.rewind
   data = JSON.parse request.body.read
-  comment = Comment.new(data["comment"])
-  if comment.save
-    halt 201, json({comment: comment})
+  if is_login?
+    comment = current_user.comments.build(data["comment"])
+    if comment.save
+      halt 201, json({comment: comment})
+    else
+      halt 422, json({errors: comment.errors.full_messages})
+    end
   else
-    halt 422 ,json({errors: comment.errors.full_messages})
+    halt 401, json({})
   end
-
 end
 
 #notification routes

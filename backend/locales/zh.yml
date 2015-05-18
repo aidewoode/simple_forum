@@ -36,6 +36,7 @@ zh:
             name: 
               blank: "不能为空"
               taken: "已被使用，请换一个"
+              invalid: "格式不正确"
             email:
               blank: "不能为空"
               taken: "已被使用，请换一个"

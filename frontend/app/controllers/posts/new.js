@@ -7,13 +7,19 @@ export default Ember.Controller.extend({
   
   actions: {
     createPost: function() {
+      var btn = Ember.$("#createButton").button("loading"); 
      var post = this.store.createRecord("post", {
        title: this.get("title") ,
        body: this.get("contentBody"),
        tag: this.get("tag")
      }); 
 
-     post.save();
+     post.save().then(function() {
+       btn.button("reset");
+     }, function() {
+       post.deleteRecord();
+       btn.button("reset");
+     });
     },
 
     createComment: function() {

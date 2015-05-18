@@ -21,6 +21,14 @@ nav.global_nav a:hover {
   background: none;
 }
 
+nav.global_nav ul.menu-nav a {
+  color: #555;
+}
+
+nav.global_nav li.notification a span {
+  vertical-align: middle;
+}
+
 section.index {
   min-height: 1000px;
   background: #eceef1;
@@ -248,6 +256,19 @@ li.comment div.comment-info a {
   border-color: rgb(66, 156, 214);
 }
 
+.static-alert {
+  background-color: #ffc;
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin: 0 60px;
+  opacity: 0.85;
+}
+
+.static-alert a {
+  color: #f60;
+}
+
 /* user page style*/
 
 div.user-header {
@@ -386,6 +407,12 @@ div.user-tab > ul li a.active {
   /* change the default bootstrap style*/
   color: #fff;
   opacity: 0.85;
+}
+
+.signup-login-form .modal-footer {
+  text-align: center;
+  color: #f03;
+  font-weight: 600;
 }
 
 .modal-header {
