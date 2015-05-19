@@ -10,6 +10,9 @@ export default Ember.Controller.extend({
   actions: {
     transToCommentMode: function() {
       this.set("controllers.posts/new.isCreateComment", true);
-    }
+      // reset error message
+      this.set("controllers.posts/new.hasError", false);
+    },
+
   }
 });

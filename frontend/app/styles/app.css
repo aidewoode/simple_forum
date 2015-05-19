@@ -409,7 +409,8 @@ div.user-tab > ul li a.active {
   opacity: 0.85;
 }
 
-.signup-login-form .modal-footer {
+/* error message style */
+.error-message {
   text-align: center;
   color: #f03;
   font-weight: 600;
@@ -473,4 +474,50 @@ div.post-new-page button[type="submit"]:focus {
 div.post-new-page button[type="submit"]:hover {
   color: #fff;
   opacity: 0.85;
+}
+
+/* loading page style */
+.loading-wrapper {
+  position: fixed;
+  background-color: #fff;
+  opacity: 0.55;
+  top: 0;
+  bottom: 0;
+  left:0;
+  right: 0;
+  z-index: 2000;
+}
+.spinner {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-color: #333;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  border-radius: 100%;
+  -webkit-animation: scaleout 1.0s infinite ease-in-out;
+  animation: scaleout 1.0s infinite ease-in-out
+}
+
+@-webkit-keyframes scaleout {
+  0% { -webkit-transform: scale(0.0)}
+  100% {
+    -webkit-transform: scale(1.0);
+    opacity: 0;
+  }
+}
+
+@keyframes scaleout {
+  0% {
+    transform: scale(0.0);
+    -webkit-transform: scale(0.0);
+  } 100% {
+    transform: scale(1.0);
+    -webkit-transform: scale(1.0);
+    opacity: 0;
+  }
 }

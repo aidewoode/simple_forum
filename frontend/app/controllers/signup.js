@@ -2,6 +2,7 @@ import Ember from "ember";
 
 export default Ember.Controller.extend({
   hasError: false,
+  errorMessage: null,
 
   actions: {
     signup: function() {
@@ -17,8 +18,12 @@ export default Ember.Controller.extend({
       user.save().then(function() {
         btn.button("reset");
         Ember.$("signupForm").modal("hidden");
-      }, function() {
+      }, function(error) {
         user.deleteRecord();
+
+        // set error message
+        self.set("errorMessage", error.responseJSON.errors);
+        self.set("hasError", true);
         btn.button("reset");
       });
     } 

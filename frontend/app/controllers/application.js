@@ -1,7 +1,7 @@
 import Ember from "ember";
 
 export default Ember.Controller.extend({
-  needs: ["login", "posts/new"],
+  needs: ["login", "signup", "posts/new"],
 
   currentUser: function() {
     if (!Ember.isEmpty(this.get("controllers.login.currentUser"))) {
@@ -16,6 +16,8 @@ export default Ember.Controller.extend({
   actions: {
     transToPostMode: function() {
       this.set("controllers.posts/new.isCreateComment", false);
+      // reset error message
+      this.set("controllers.posts/new.hasError", false);
     },
 
     logOut: function() {
@@ -23,8 +25,9 @@ export default Ember.Controller.extend({
       this.set("controllers.login.currentUser", null);
     },
 
-    resetErrorMessage: function() {
-      this.set("controllers.login.hasError", false);
-    }
+    resetErrorMessage: function(item) {
+      this.set("controllers."+ item +".hasError", false);
+    } 
+
   }
 });

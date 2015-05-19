@@ -18,7 +18,7 @@
               {{view "custom-textarea" id="editor" class="form-control" value=contentBody}}
             </div>
           </div>
-          <button type="submit" class="btn btn-default center-block">Create</button>
+          <button data-loading-text="Creating..." autocomplete="off" id="createButton" type="submit" class="btn btn-default center-block">Create</button>
         </form>
         {{else}}
         <form {{action "createPost" on="submit"}} class="form-horizontal">
@@ -40,6 +40,12 @@
         </form>
         {{/if}}
     </div>
+  </div>
+
+  <div class="error-message modal-footer">
+    {{#if hasError}}
+      {{errorMessage}}
+    {{/if}}
   </div>
   </div>
 </div>

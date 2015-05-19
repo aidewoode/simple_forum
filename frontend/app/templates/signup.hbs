@@ -25,7 +25,10 @@
           <button id="signupButton" data-loading-text="Signup..." autocomplete="off" type="submit" class="btn btn-block">Signup</button>
         </form>
       </div>
-      <div class="modal-footer">
+      <div class="error-message modal-footer">
+        {{#if hasError}}
+          {{errorMessage}}
+        {{/if}}
       </div>
 
     </div>

@@ -220,12 +220,12 @@ post "/posts" do
   request.body.rewind
   data = JSON.parse request.body.read
   if is_login?
-    post = current_user.posts.build(data["post"])
+    post = current_user.posts.build(data["post"].keep_if{ |key, value| key == "body" or key == "tag" or key == "title"})
     if post.save
       # return a new post and let ember to push it into store
       halt 201, json({post: post}) 
     else
-      halt 422 ,json({errors: post.errors.full_messages})
+      halt 422 ,json({errors: post.errors.full_messages[0]})
     end
   else
     halt 401 ,json({})
@@ -289,7 +289,7 @@ post "/users" do
   if user.save
     halt 201, json({token: user.session_active_token, user: user})
   else
-    halt 422 ,json({error: user.errors.full_messages})
+    halt 422 ,json({errors: user.errors.full_messages[0]})
   end
 
 end
@@ -351,11 +351,11 @@ post "/comments" do
   request.body.rewind
   data = JSON.parse request.body.read
   if is_login?
-    comment = current_user.comments.build(data["comment"])
+    comment = current_user.comments.build(data["comment"].keep_if{ |key, value| key == "body"})
     if comment.save
       halt 201, json({comment: comment})
     else
-      halt 422, json({errors: comment.errors.full_messages})
+      halt 422, json({errors: comment.errors.full_messages[0]})
     end
   else
     halt 401, json({})
