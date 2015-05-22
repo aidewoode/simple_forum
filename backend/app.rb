@@ -287,7 +287,11 @@ post "/users" do
   data = JSON.parse request.body.read
   user = User.new(data["user"].delete_if {|key, value| key == "admin"})
   if user.save
-    halt 201, json({token: user.session_active_token, user: user})
+    user_hash = user.custom_serialize
+    user_hash.delete("password_digest")
+    user_hash.delete("admin")
+    user_hash.store("token", user.session_active_token)
+    halt 201, json({user: user_hash})
   else
     halt 422 ,json({errors: user.errors.full_messages[0]})
   end
@@ -375,6 +379,38 @@ get "/notifications/:id" do
     halt 404, json({})
   end
 end
+
+put "/notifications/:id" do
+  if is_login?
+    request.body.rewind
+    data = JSON.parse request.body.read
+
+    notification = current_user.notifications.find(params[:id])
+    if notification.update_attributes(data["notification"].keep_if {|key, value| key == "read"})
+      notification.save
+      halt 201, json({})
+    else
+      halt 422, json({})
+    end
+  else
+    halt 401 ,json({})
+  end
+end
+
+delete "/notifications/:id" do
+  if is_login?
+    if current_user.notifications.exists?(params[:id])
+      Notification.find(params[:id]).destroy
+      halt 201, json({})
+    else
+      halt 422, json({})
+    end
+  else
+    halt 401, json({})
+  end
+
+end
+
 
 #session route
 #
