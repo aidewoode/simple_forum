@@ -6,6 +6,8 @@ var Router = Ember.Router.extend({
 });
 
 export default Router.map(function() {
+  this.route("about");
+
   this.route("posts", function() {
     this.route("new");
   });
@@ -19,6 +21,5 @@ export default Router.map(function() {
     this.route("comments");
   });
 
-  this.route("login");
-  this.route("signup");
+
 });

@@ -29,6 +29,10 @@ nav.global_nav li.notification a span {
   vertical-align: middle;
 }
 
+.hasNotification {
+  color: #f20;
+}
+
 section.index {
   min-height: 1000px;
   background: #eceef1;
@@ -309,21 +313,25 @@ div.user-notifications {
   padding-top: 20px;
 }
 
-div.user-notifications div.notification-number {
-  font-size: 1.1em;
-  font-weight: 600;
-  color: rgb(66, 156, 214);
-  margin-bottom: 10px;
-}
-
 div.user-notifications ul li {
   border: none;
-  background-color: rgba(255, 193, 0, 0.65);
+  background-color: rgba(66, 156, 214, 0.65);
   color: #fff;
   margin-bottom: 15px;
   border-radius: 4px;
-  box-shadow: 0 1px 1px #eee;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+}
 
+div.user-notifications li span {
+  cursor: pointer;
+  color: #555;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+div.user-notifications span.remove {
+  text-decoration: none;
+  color: #fff;
 }
 
 div.user-content {

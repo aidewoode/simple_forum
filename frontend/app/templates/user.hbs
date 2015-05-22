@@ -27,24 +27,6 @@
   <hr />
 
 </ul>
-<div class="container-fluid user-notifications">
-  <div class="notification-number">You have {{model.notifications.length}} notifications :</div>
-  {{#if model.notifications.length}}
-  <ul class="list-group">
-    {{#each noti in model.notifications}}
-      <li class="list-group-item">
-        {{#if noti.atwho}}
-        你在文章{{noti.post_name}}的回复，被{{noti.user_name}}@了
-        {{else}}
-        你的文章{{noti.post_name}}，被{{noti.user_name}}回复了
-        {{/if}}
-      </li>
-    {{/each}}
-    
-  </ul>
-  {{/if}}
-  
-</div>
   <div class="container-fluid user-tab">
     <ul class="nav nav-tabs" >
       <li role="presentation">{{#link-to "user.posts"}}Post List {{/link-to}}</li>

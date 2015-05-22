@@ -8,6 +8,6 @@ export default DS.Model.extend({
   updated_at: DS.attr("date"),
 
   user: DS.belongsTo("user"),
-  comment: DS.belongsTo("comment")
+  comment: DS.belongsTo("comment", {async: true})
 
 });

@@ -1,0 +1,40 @@
+<div class="modal fade" id="notificationCenter" role="dialog" aria-labelledby="notiCenterLabel" aria-hidden="true">
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      {{#if currentUser.notifications.length}}
+      <p class="modal-title" id="notiCenterLabel">You have {{currentUser.notifications.length}} notifications</p>
+      {{else}}
+      <p class="modal-title" id="notiCenterLabel">You don't have any notification</p>
+      {{/if}}
+
+    </div>
+    <div class="modal-body">
+      <div class="user-notifications">
+      <ul class="list-group">
+        {{#each noti in currentUser.notifications}}
+        <li class="list-group-item {{if noti.read "disabled"}}">
+          <span {{action "removeNoti" noti}}class="glyphicon glyphicon-remove pull-right remove"></span>
+            {{#if noti.atwho}}
+            你在文章<span {{action "transToPost" noti}}>{{noti.post_name}}</span>的回复，被{{noti.user_name}}@了
+            {{else}}
+            你的文章<span {{action "transToPost" noti}}>{{noti.post_name}}</span>，被{{noti.user_name}}回复了
+            {{/if}}
+          </li>
+        {{/each}}
+      </ul>
+      </div>
+    </div>
+    <div class="modal-footer">
+      
+    </div>
+    
+  </div>
+  
+</div>
+  
+</div>
+

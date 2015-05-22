@@ -8,8 +8,8 @@ export default DS.Model.extend({
   commentPostName: DS.attr("string"),
   user_id: DS.attr("number"),
 
-  post: DS.belongsTo("post"),
-  user: DS.belongsTo("user"),
+  post: DS.belongsTo("post",{async: true}),
+  user: DS.belongsTo("user", {async: true}),
   notifications: DS.hasMany("notification")
   
 });
