@@ -1,13 +1,16 @@
 import Ember from "ember";
-import RouteMixin from "ember-cli-pagination/remote/route-mixin";
 
-export default Ember.Route.extend( RouteMixin, {
-  model: function(params) {
-    return this.findPaged("post", params);
+export default Ember.Route.extend({
+
+  model: function() {
+    return this.store.find("post", {page: 1, per_page: 10});
   },
 
-  testP: function() {
-    alert("teste");
-  }.observes("didLoad")
+  setupController: function(controller, model) {
+    controller.set("model", model);
+    controller.set("totalPages", this.store.metadataFor("post").total_pages);
+
+    controller.set("page", 1);
+  }
 
 });

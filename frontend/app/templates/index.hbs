@@ -1,7 +1,7 @@
 <div class="container all-contents">
   <ul class="content-list list-group">
-    {{#each post in arrangedContent}}
-    <li class="list-group-item {{post-class-name post}}">
+    {{#each post in model}}
+    <li class="list-group-item {{post-class-name post.top isEssence=post.essence}}">
       {{#if post.commentsCount}}
       <div class="pull-right reply">
         <a href="#">{{post.commentsCount}}</a>
@@ -39,5 +39,10 @@
     {{/each}}
   </ul>
 
-   {{page-numbers content=content}} 
+  {{#if isEnd}}
+  <button class="center-block btn btn-default normal-button" disabled="disabled">No more</button>
+  {{else}}
+  <button class="center-block btn btn-default normal-button load-next-button" {{action "loadMore"}} data-loading-text="Loading..." autocomplete="off" >Load More</button>
+  {{/if}}
+
 </div>

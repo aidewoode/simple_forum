@@ -5,7 +5,7 @@ export default Ember.Controller.extend({
   attemptedTransition: null,
   token: Cookies.get("access_token"),
   currentUser: Cookies.get("auth_user"),
-  errorMessage: "Wrong user name or email",
+  errorMessage: "Wrong password or email",
   hasError: false,
 
   tokenChanged: function() {

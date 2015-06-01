@@ -89,7 +89,7 @@ div.all-contents ul.content-list li {
   margin-bottom: 25px;
 }
 
-div.all-contents ul.content-list li.essense-post {
+div.all-contents ul.content-list li.essence-post {
   border-color: rgb(255, 193, 0);
 }
 
@@ -160,7 +160,7 @@ div.post-title {
   border-left: 5px solid rgb(66, 156, 214);
 }
 
-div.essense-post {
+div.essence-post {
   border-color: rgb(255, 193, 0);
 }
 
@@ -203,7 +203,7 @@ div.post-title div.post-info a {
 }
 
 div.post-body {
-  margin-bottom: 30px;
+  margin-bottom: 50px;
   margin-top: 30px;
 }
 
@@ -211,6 +211,7 @@ div.comments-number {
   color: #444;
   font-size: 1.1em;
   margin-bottom: 30px;
+  margin-top: 50px;
 }
 
 
@@ -265,7 +266,7 @@ li.comment div.comment-info a {
   text-align: center;
   padding-top: 5px;
   padding-bottom: 5px;
-  margin: 0 60px;
+  margin: 0px 60px;
   opacity: 0.85;
 }
 

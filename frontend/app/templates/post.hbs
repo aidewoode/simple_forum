@@ -1,5 +1,5 @@
 <div class="container all-contents">
-<div class="post-title {{post-class-name model}}">
+<div class="post-title {{post-class-name model.top isEssence=model.essence}}">
   <div class="pull-right avatar">
     <img class="img-responsive img-circle" src={{model.userAvatar}} alt="avatar">
   </div>
@@ -18,13 +18,13 @@
 <div class="entry post-body">
   {{model.body}}
 </div>
-  {{outlet}}
-
   {{#if isAuthenticated}}
-    <button class="center-block btn btn-default normal-button" {{action "transToCommentMode"}} data-toggle="modal" data-target="#newPostForm">Post a comment</button>
+  <button  class="center-block btn btn-default normal-button" {{action "transToCommentMode" model }} data-toggle="modal" data-target="#newPostForm" >Post a comment</button>
   {{else}}
     <div class="static-alert container-fluid">
       You must <a href="#" data-toggle="modal" data-target="#loginForm">login</a> or  <a href="#" data-toggle="modal" data-target="#signupForm">signup</a> to post a comment
     </div>
   {{/if}}
+  {{outlet}}
+
 </div>

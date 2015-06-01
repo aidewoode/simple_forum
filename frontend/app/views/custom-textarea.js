@@ -18,5 +18,11 @@ export default Ember.TextArea.extend({
     // those code will don't need anymore.
     var element = Ember.$(".simditor-toolbar");
     element.css("width", "100%");
+
+    editor.on("valuechanged", function() {
+      var text = editor.getValue();
+      Ember.$("#editor").val(text); 
+    });
+
   }
 });
