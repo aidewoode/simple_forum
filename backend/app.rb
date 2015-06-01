@@ -222,6 +222,8 @@ post "/posts" do
   if is_login?
     post = current_user.posts.build(data["post"].keep_if{ |key, value| key == "body" or key == "tag" or key == "title"})
     if post.save
+      post.last_reply_time = post.created_at
+      post.save
       # return a new post and let ember to push it into store
       halt 201, json({post: post}) 
     else
@@ -355,8 +357,17 @@ post "/comments" do
   request.body.rewind
   data = JSON.parse request.body.read
   if is_login?
+    post_id = data["comment"]["post"]
     comment = current_user.comments.build(data["comment"].keep_if{ |key, value| key == "body"})
+    if Post.exists?(post_id)
+      comment.post_id = post_id
+    else
+      halt 422, json({errors: "post id can't be blank"})
+    end
     if comment.save
+      post = Post.find(post_id)
+      post.last_reply_time = comment.created_at
+      post.save
       halt 201, json({comment: comment})
     else
       halt 422, json({errors: comment.errors.full_messages[0]})
