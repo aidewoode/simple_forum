@@ -10,6 +10,8 @@ export default Ember.Route.extend({
     controller.set("model", model);
     controller.set("totalPages", this.store.metadataFor("comment").total_pages);
     controller.set("postId", this.paramsFor("post").id);
+
+    // reset page property
     controller.set("page", 1);
   }
 

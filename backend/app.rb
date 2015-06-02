@@ -1,3 +1,6 @@
+##
+# need to improve ,too mush repeating code.
+##
 require "sinatra"
 require "sinatra/activerecord"
 require "sinatra/json"
@@ -201,6 +204,7 @@ get "/posts/:id" do
   if (post = Post.find_by_id(params[:id]))
     comments = post.comments
     
+    # need to improve ,too mush repeating code.
     post_hash = post.custom_serialize("user_id")
     post_hash.store("userAvatar", post.user.avatar_url)
     post_hash.store("commentsCount", post.comments.count)
@@ -225,7 +229,13 @@ post "/posts" do
       post.last_reply_time = post.created_at
       post.save
       # return a new post and let ember to push it into store
-      halt 201, json({post: post}) 
+      # need to improve ,too mush repeating code.
+      post_hash = post.custom_serialize("user_id")
+      post_hash.store("userAvatar", post.user.avatar_url)
+      post_hash.store("postUserName", post.user.name)
+      post_hash.store("commentsCount", post.comments.count)
+      post_hash.store("user_id", post.user.id)
+      halt 201, json({post: post_hash}) 
     else
       halt 422 ,json({errors: post.errors.full_messages[0]})
     end
@@ -307,7 +317,7 @@ end
 get "/comments" do
   comments = []
   if (post = Post.find_by_id(params[:post_id]))
-    totalComment = post.comments.paginate(:page => params[:page], :per_page => 10)
+    totalComment = post.comments.paginate(:page => params[:page], :per_page => 10).order("created_at DESC")
     totalComment.each do |comment|
       comment_hash = comment.custom_serialize("user_id", "post_id")
       comment_hash.store("userAvatar", comment.user.avatar_url)
@@ -368,7 +378,12 @@ post "/comments" do
       post = Post.find(post_id)
       post.last_reply_time = comment.created_at
       post.save
-      halt 201, json({comment: comment})
+      comment_hash = comment.custom_serialize("user_id", "post_id")
+      comment_hash.store("userAvatar", comment.user.avatar_url)
+      comment_hash.store("commentUserName", comment.user.name)
+      comment_hash.store("commentPostName", comment.post.title)
+      comment_hash.store("user_id", comment.user.id)
+      halt 201, json({comment: comment_hash})
     else
       halt 422, json({errors: comment.errors.full_messages[0]})
     end

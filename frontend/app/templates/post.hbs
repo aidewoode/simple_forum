@@ -25,6 +25,11 @@
       You must <a href="#" data-toggle="modal" data-target="#loginForm">login</a> or  <a href="#" data-toggle="modal" data-target="#signupForm">signup</a> to post a comment
     </div>
   {{/if}}
+  {{#if model.commentsCount}}
+    <div class="comments-number">
+      共{{model.commentsCount}}条回复:
+    </div>
+  {{/if}}
   {{outlet}}
 
 </div>

@@ -13,7 +13,6 @@ export default Ember.Controller.extend({
       // reset error message
       this.set("controllers.posts/new.hasError", false);
 
-      console.log(post);
       this.set("controllers.posts/new.post", post);
     },
 

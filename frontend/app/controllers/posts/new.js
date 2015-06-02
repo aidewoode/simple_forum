@@ -1,7 +1,7 @@
 import Ember from "ember";
 
 export default Ember.Controller.extend({
-  needs: "index",
+  needs: ["index", "post/comments", "post"],
 
   selectContent: ["test1", "test2", "test3", "test4"],
   isCreateComment: false,
@@ -19,9 +19,11 @@ export default Ember.Controller.extend({
        tag: this.get("tag")
      }); 
 
-     post.save().then(function() {
+     post.save().then(function(record) {
        btn.button("reset");
        Ember.$("#newPostForm").modal("hide");
+       self.get("controllers.index.model").unshiftObject(record);
+       self.get("controllers.index.model").popObject();
 
      }, function(error) {
        post.deleteRecord();
@@ -39,9 +41,30 @@ export default Ember.Controller.extend({
         post: self.get("post"),
       });
 
-      comment.save().then(function() {
+      comment.save().then(function(record) {
+
         btn.button("reset");
         Ember.$("#newPostForm").modal("hide");
+        self.get("controllers.post/comments.model").unshiftObject(record);
+
+
+        //increase commentsCount's value 
+        self.set("controllers.post.model.commentsCount", self.get("controllers.post.model.commentsCount") + 1);
+
+        // when a post's commentsCount less than 10, 
+        // don't need to remove the last comment
+        // to insure have current pagination for the backend. 
+        if (self.get("controllers.post.model.commentsCount") > 10) {
+
+          self.get("controllers.post/comments.model").popObject();
+
+          //when a post's commentsCount is 11 and the totalPages didn't change.
+          //set the comments's totalPages to 2, let the user can load next page.
+          if (self.get("controllers.post/comments.totalPages") === 1) {
+            self.set("controllers.post/comments.totalPages", 2);
+          }
+        }
+
       },function(error) {
         comment.deleteRecord();
         self.set("errorMessage", error.responseJSON.errors);
