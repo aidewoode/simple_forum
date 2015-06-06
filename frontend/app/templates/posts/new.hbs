@@ -14,8 +14,20 @@
         {{#if isCreateComment}}
         <form {{action "createComment" on="submit"}} class="form-horizontal">
           <div class="form-group">
-            <div class="col-sm-12">
-              {{view "custom-textarea" id="editor" class="form-control" }}
+            <div class="col-sm-12" role="tabpanel">
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#edit" aria-controls="edit" role="tab" data-toggle="tab">Edit</a></li>
+                <li role="presentation" ><a {{action "mdPreview"}} href="#preview" aria-controls="preview" role="tab" data-toggle="tab">Preview</a></li>
+              </ul>
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="edit" >
+                  {{view "custom-textarea" class="form-control editor comment-editor" rows="15" atwhoItems=atwhoItems}}
+                </div>
+                <div role="tabpanel" class="tab-pane" id="preview" >
+                  <div class="editor-preview entry">
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <button data-loading-text="Creating..." autocomplete="off" id="createButton" type="submit" class="btn btn-default center-block">Create</button>
@@ -32,8 +44,20 @@
           </div>
 
           <div class="form-group">
-            <div class="col-sm-12">
-              {{view "custom-textarea" id="editor" class="form-control" }}
+            <div class="col-sm-12" role="tabpanel">
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#edit" aria-controls="edit" role="tab" data-toggle="tab">Edit</a></li>
+                <li role="presentation" ><a {{action "mdPreview"}} href="#preview" aria-controls="preview" role="tab" data-toggle="tab">Preview</a></li>
+              </ul>
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="edit" >
+                  {{view "custom-textarea" class="form-control editor" rows="15" }}
+                </div>
+                <div role="tabpanel" class="tab-pane" id="preview" >
+                  <div class="editor-preview entry">
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <button type="submit" data-loading-text="Creating..." autocomplete="off" id="createButton" class="btn btn-default center-block">Create</button>

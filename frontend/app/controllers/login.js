@@ -10,11 +10,11 @@ export default Ember.Controller.extend({
 
   tokenChanged: function() {
     if (Ember.isEmpty(this.get("token"))) {
-      Cookies.remove("access_token", {path: ""});
-      Cookies.remove("auth_user", {path: ""});
+      Cookies.remove("access_token", {path: "/"});
+      Cookies.remove("auth_user", {path: "/"});
     } else {
-      Cookies.set("access_token", this.get("token", {path: ""}));
-      Cookies.set("auth_user", this.get("currentUser", {path: ""}));
+      Cookies.set("access_token", this.get("token", {path: "/"}));
+      Cookies.set("auth_user", this.get("currentUser", {path: "/"}));
     }
   }.observes("token"),
 

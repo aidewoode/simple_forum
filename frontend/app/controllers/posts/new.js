@@ -4,18 +4,32 @@ export default Ember.Controller.extend({
   needs: ["index", "post/comments", "post"],
 
   selectContent: ["test1", "test2", "test3", "test4"],
+
   isCreateComment: false,
   hasError: false,
   errorMessage: null,
   post: null,
-  
+  atwhoItems: null,
+
   actions: {
+    mdPreview: function() {
+
+      marked.setOptions({
+        sanitize: true
+      });
+
+      var inputContent = Ember.$("textarea.editor").val();
+      var outputContent = marked(inputContent);
+      Ember.$("div.editor-preview").html(outputContent);
+
+    },
+    
     createPost: function() {
       var self = this;
       var btn = Ember.$("#createButton").button("loading"); 
      var post = this.store.createRecord("post", {
        title: this.get("title") ,
-       body: Ember.$("#editor").val(),
+       body: Ember.$("div.editor-preview").html(),
        tag: this.get("tag")
      }); 
 
@@ -37,7 +51,7 @@ export default Ember.Controller.extend({
       var self = this;
       var btn = Ember.$("#createButton").button("loading"); 
       var comment = this.store.createRecord("comment", {
-        body: Ember.$("#editor").val(),
+        body: Ember.$("div.editor-preview").html(),
         post: self.get("post"),
       });
 

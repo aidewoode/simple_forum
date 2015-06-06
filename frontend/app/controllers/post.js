@@ -7,14 +7,4 @@ export default Ember.Controller.extend({
     return !Ember.isEmpty(this.get("controllers.login.currentUser"));
   }.property("controllers.login.currentUser"),
 
-  actions: {
-    transToCommentMode: function(post) {
-      this.set("controllers.posts/new.isCreateComment", true);
-      // reset error message
-      this.set("controllers.posts/new.hasError", false);
-
-      this.set("controllers.posts/new.post", post);
-    },
-
-  }
 });

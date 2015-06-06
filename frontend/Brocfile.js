@@ -20,12 +20,12 @@ var app = new EmberApp();
 
 app.import("bower_components/bootstrap/dist/css/bootstrap.css");
 app.import("bower_components/Entry.css/bin/entry.css");
-app.import("bower_components/simditor-2.1.9/styles/simditor.css");
+app.import("bower_components/At.js/dist/css/jquery.atwho.css");
 
 app.import("bower_components/bootstrap/dist/js/bootstrap.js");
 app.import("bower_components/moment/moment.js");
 app.import("bower_components/js-cookie/src/js.cookie.js");
-app.import("bower_components/simditor-2.1.9/scripts/module.js");
-app.import("bower_components/simditor-2.1.9/scripts/hotkeys.js");
-app.import("bower_components/simditor-2.1.9/scripts/simditor.js");
+app.import("bower_components/marked/lib/marked.js");
+app.import("bower_components/Caret.js/dist/jquery.caret.js");
+app.import("bower_components/At.js/dist/js/jquery.atwho.js");
 module.exports = app.toTree();

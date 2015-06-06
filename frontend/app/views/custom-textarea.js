@@ -1,28 +1,21 @@
 import Ember from "ember";
 
 export default Ember.TextArea.extend({
+
+  atwhoItems: null,
+
   didInsertElement: function() {
     this._super();
     Ember.run.scheduleOnce("afterRender", this, this.afterRenderEvent);
-
   },
 
   afterRenderEvent: function() {
-    var editor = new Simditor({
-      textarea: Ember.$("#editor")
-    });
-
-    // fixed simditor toolbar's width don't compute in time ,
-    // set the toolbar width to 100% maybe not a really good method to 
-    // fixed the issue, When simditor update and also fixed the issue,
-    // those code will don't need anymore.
-    var element = Ember.$(".simditor-toolbar");
-    element.css("width", "100%");
-
-    editor.on("valuechanged", function() {
-      var text = editor.getValue();
-      Ember.$("#editor").val(text); 
-    });
-
+    if (!Ember.isEmpty(this.get("atwhoItems"))) {
+      Ember.$("textarea.comment-editor").atwho({
+        at: "@",
+        insertTpl: "[${name}](/user/${id}/posts)",
+        data: this.get("atwhoItems")
+      });
+    }
   }
 });

@@ -486,6 +486,24 @@ div.post-new-page button[type="submit"]:hover {
   opacity: 0.85;
 }
 
+div.post-new-page textarea.editor {
+  box-shadow: none;
+  resize: none;
+}
+
+div.post-new-page textarea.editor:focus {
+  border-color: rgb(66, 156, 214);
+}
+
+div.post-new-page #preview {
+  height: 350px;
+  overflow: scroll;
+  border: 1px solid #eee;
+}
+
+div.post-new-page div.editor-preview {
+}
+
 /* loading page style */
 .loading-wrapper {
   position: fixed;

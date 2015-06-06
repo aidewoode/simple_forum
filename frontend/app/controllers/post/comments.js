@@ -1,7 +1,7 @@
 import Ember from "ember";
 
 export default Ember.ArrayController.extend({
-  needs: ["login","posts/new"],
+  needs: ["login","posts/new", "post"],
 
   sortProperties: ["created_at"],
   sortAscending: false,
@@ -9,6 +9,14 @@ export default Ember.ArrayController.extend({
   page: 1,
   postId: null,
   totalPages: null,
+
+  post: function() {
+    return this.get("controllers.post.model");
+  }.property("controllers.post.model"),
+
+  commentsCount: function() {
+    return this.get("controllers.post.model.commentsCount");
+  }.property("controllers.post.model.commentsCount"),
 
   isEnd: function() {
     if (this.get("page") === this.get("totalPages")) {
@@ -26,7 +34,44 @@ export default Ember.ArrayController.extend({
   actions: {
     transToCommentMode: function() {
       this.set("controllers.posts/new.isCreateComment", true);
+
+      //reset error message.
       this.set("controllers.posts/new.hasError", false);
+      this.set("controllers.posts/new.post", this.get("post"));
+
+      var atwhoUserId = [];
+      var atwhoUserName = [];
+      var atwhoItems = [];
+      this.get("model").forEach(function(item) {
+        atwhoUserId.push(item.get("user_id"));
+        atwhoUserName.push(item.get("commentUserName"));
+      }); 
+
+      atwhoUserId = atwhoUserId.uniq();
+      atwhoUserName = atwhoUserName.uniq();
+
+
+      for (var i = 0; i < atwhoUserId.length; i++) {
+        atwhoItems.push({name: atwhoUserName[i], id: atwhoUserId[i] });
+      }
+
+      if (Ember.isEmpty(Ember.$("textarea.comment-editor"))) {
+
+      //for the first time load the editor when the textarea element didn't insert in DOM.
+      this.set("controllers.posts/new.atwhoItems", atwhoItems); 
+
+      } else {
+
+        Ember.$("textarea.comment-editor").atwho({
+          at: "@",
+          insertTpl: "[${name}](/user/${id}/posts)",
+          data: atwhoItems
+        });
+      
+      }
+
+
+
     },
 
     loadMore: function() {
@@ -38,7 +83,14 @@ export default Ember.ArrayController.extend({
       Ember.$.get("/comments?page=" + page + "&per_page=10&post_id=" + this.get("postId")).then(function(response) {
 
         self.store.pushMany("comment", response.comments);
-        self.get("model").pushObjects(response.comments);
+
+        var commentList = [];
+        response.comments.forEach(function(item) {
+          var commentObject = Ember.Object.create(item);
+          commentList.push(commentObject);
+        });
+
+        self.get("model").pushObjects(commentList);
         self.set("page", page);
 
         self.set("totalPages", response.meta.total_pages);

@@ -203,6 +203,13 @@ end
 get "/posts/:id" do
   if (post = Post.find_by_id(params[:id]))
     comments = post.comments
+    atwho = comments.map do |comment|
+      comment.user
+    end
+
+    atlist = atwho.uniq.map do |user|
+      {name: user.name, url: "/user/#{user.id}/posts"}
+    end
     
     # need to improve ,too mush repeating code.
     post_hash = post.custom_serialize("user_id")

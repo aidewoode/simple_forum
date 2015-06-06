@@ -16,6 +16,7 @@
     "moment": "~2.10.2",
     "Entry.css": "https://github.com/zmmbreeze/Entry.css.git#~1.7.2",
     "js-cookie": "~1.5.1",
-    "simditor-2.1.9": "https://github.com/mycolorway/simditor/releases/download/v2.1.9/simditor-2.1.9.zip"
+    "marked": "~0.3.3",
+    "At.js": "~1.2.0"
   }
 }
