@@ -502,6 +502,7 @@ div.post-new-page #preview {
 }
 
 div.post-new-page div.editor-preview {
+  max-width: 800px;
 }
 
 /* loading page style */

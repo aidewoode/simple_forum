@@ -32,12 +32,27 @@ export default Ember.ArrayController.extend({
 
 
   actions: {
-    transToCommentMode: function() {
+    transToCommentMode: function(atWho) {
       this.set("controllers.posts/new.isCreateComment", true);
 
       //reset error message.
       this.set("controllers.posts/new.hasError", false);
       this.set("controllers.posts/new.post", this.get("post"));
+
+      if (Ember.isEmpty(atWho)) {
+
+      //reset editor's input 
+      Ember.$("textarea.comment-editor").val("");
+      } else {
+
+        // for the first time editor load, 
+        // and the textarea element did't insert in DOM.
+        // use posts.new controller to send the atWho value to 
+        // custom-textarea view.
+        this.set("controllers.posts/new.atWho", atWho);
+
+        Ember.$("textarea.comment-editor").val("@" + atWho + " ");
+      }
 
       var atwhoUserId = [];
       var atwhoUserName = [];
@@ -55,20 +70,13 @@ export default Ember.ArrayController.extend({
         atwhoItems.push({name: atwhoUserName[i], id: atwhoUserId[i] });
       }
 
-      if (Ember.isEmpty(Ember.$("textarea.comment-editor"))) {
-
-      //for the first time load the editor when the textarea element didn't insert in DOM.
       this.set("controllers.posts/new.atwhoItems", atwhoItems); 
 
-      } else {
 
         Ember.$("textarea.comment-editor").atwho({
           at: "@",
-          insertTpl: "[${name}](/user/${id}/posts)",
           data: atwhoItems
         });
-      
-      }
 
 
 

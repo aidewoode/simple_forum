@@ -10,15 +10,29 @@ export default Ember.Controller.extend({
   errorMessage: null,
   post: null,
   atwhoItems: null,
+  atWho: null,
 
   actions: {
     mdPreview: function() {
-
-      marked.setOptions({
-        sanitize: true
-      });
-
       var inputContent = Ember.$("textarea.editor").val();
+      var position = inputContent.indexOf("@");
+
+      // replace atWho string to a link.
+      while (position > -1 ) {
+        var preChar = inputContent.charAt(position-1);
+        if (preChar === "" || preChar === " "){
+          var lastIndex = inputContent.indexOf(" ", position);
+          var matchString = inputContent.slice(position+1, lastIndex);
+          for (var i = 0; i < this.get("atwhoItems").length; i++) {
+            if (matchString === this.get("atwhoItems")[i]["name"]) {
+              inputContent = inputContent.replace("@"+matchString, "<a href=\"/user/" + this.get("atwhoItems")[i]["id"] + "/posts\">@ "+ matchString + "</a>");
+            }
+          }
+          
+        }
+        position = inputContent.indexOf("@", position + 1)
+      }
+
       var outputContent = marked(inputContent);
       Ember.$("div.editor-preview").html(outputContent);
 

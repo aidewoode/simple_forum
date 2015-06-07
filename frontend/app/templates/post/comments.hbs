@@ -16,7 +16,7 @@
     <li class="comment list-group-item">
       {{#if isAuthenticated}}
       <div class="pull-right reply">
-        <a href="#" {{action "transToCommentMode"}} data-toggle="modal" data-target="#newPostForm"><span class="glyphicon glyphicon-menu-down" aria-label="reply" aria-hidden="true"></span></a> 
+        <a href="#" {{action "transToCommentMode" comment.commentUserName}} data-toggle="modal" data-target="#newPostForm"><span class="glyphicon glyphicon-menu-down" aria-label="reply" aria-hidden="true"></span></a> 
       </div>
       {{/if}}
       <div class="pull-left avatar">
