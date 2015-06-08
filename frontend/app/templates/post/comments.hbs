@@ -12,7 +12,7 @@
   </div>
 {{/if}}
 <ul class="list-group comments">
-  {{#each comment in arrangedContent}}
+  {{#each comment in model}}
     <li class="comment list-group-item">
       {{#if isAuthenticated}}
       <div class="pull-right reply">
@@ -27,7 +27,7 @@
         <span>.{{date-format comment.created_at}}</span>
       </div>
       <div class="entry comment-content">
-        {{comment.body}}
+        {{{comment.body}}}
       </div>
       <div class="clearfix"></div>
     </li>

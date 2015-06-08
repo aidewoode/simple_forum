@@ -10,6 +10,6 @@ export default DS.Model.extend({
 
   post: DS.belongsTo("post",{async: true}),
   user: DS.belongsTo("user", {async: true}),
-  notifications: DS.hasMany("notification")
+  notifications: DS.hasMany("notification"),
   
 });

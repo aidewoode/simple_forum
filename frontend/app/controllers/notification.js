@@ -12,7 +12,7 @@ export default Ember.Controller.extend({
   actions: {
     transToPost: function(notification) {
 
-      this.transitionToRoute("post.comments",notification.get("comment").get("post"));
+      this.transitionToRoute("post.comments",notification.get("post_id"));
 
       notification.set("read", true);
       notification.save();

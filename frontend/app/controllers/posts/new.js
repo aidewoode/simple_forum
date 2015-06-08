@@ -13,6 +13,7 @@ export default Ember.Controller.extend({
   atWho: null,
 
   actions: {
+
     mdPreview: function() {
       var inputContent = Ember.$("textarea.editor").val();
       var position = inputContent.indexOf("@");
@@ -25,12 +26,12 @@ export default Ember.Controller.extend({
           var matchString = inputContent.slice(position+1, lastIndex);
           for (var i = 0; i < this.get("atwhoItems").length; i++) {
             if (matchString === this.get("atwhoItems")[i]["name"]) {
-              inputContent = inputContent.replace("@"+matchString, "<a href=\"/user/" + this.get("atwhoItems")[i]["id"] + "/posts\">@ "+ matchString + "</a>");
+              inputContent = inputContent.replace("@"+matchString, "<a data-userid=\""+ this.get("atwhoItems")[i]["id"] + "\"class=\"atwho\"href=\"/user/" + this.get("atwhoItems")[i]["id"] + "/posts\">@<span>"+ matchString + "</span></a>");
             }
           }
           
         }
-        position = inputContent.indexOf("@", position + 1)
+        position = inputContent.indexOf("@", position + 1);
       }
 
       var outputContent = marked(inputContent);
@@ -39,6 +40,8 @@ export default Ember.Controller.extend({
     },
     
     createPost: function() {
+      this.send("mdPreview");
+
       var self = this;
       var btn = Ember.$("#createButton").button("loading"); 
      var post = this.store.createRecord("post", {
@@ -62,6 +65,21 @@ export default Ember.Controller.extend({
     },
 
     createComment: function() {
+
+      //to be sure the div.editor-preview element
+      //have content. 
+      this.send("mdPreview");
+
+      var atwhoElements = document.querySelectorAll(".editor-preview a.atwho");
+
+      var atwhoIds = [];
+
+      for (var i = 0; i < atwhoElements.length; i++) {
+        var id = atwhoElements[i].dataset.userid;
+        atwhoIds.push(id);
+
+        }
+      
       var self = this;
       var btn = Ember.$("#createButton").button("loading"); 
       var comment = this.store.createRecord("comment", {
@@ -69,11 +87,24 @@ export default Ember.Controller.extend({
         post: self.get("post"),
       });
 
-      comment.save().then(function(record) {
+      var data = {
+        post: self.get("post").get("id"),
+        comment: {
+          body: Ember.$("div.editor-preview").html()
+        },
+        atwhoList: atwhoIds.uniq()
+      };
+      console.log(data);
+
+      Ember.$.post("/comments", data).then(function(response) {
 
         btn.button("reset");
         Ember.$("#newPostForm").modal("hide");
-        self.get("controllers.post/comments.model").unshiftObject(record);
+        response.comment.created_at = comment.get("created_at");
+
+        var commentObject = Ember.Object.create(response.comment);
+
+        self.get("controllers.post/comments.model").unshiftObject(commentObject);
 
 
         //increase commentsCount's value 
@@ -93,9 +124,14 @@ export default Ember.Controller.extend({
           }
         }
 
+        // because of didn't use save() to persist 
+        // the comment, so there will be have a useless 
+        // comment record , so have to delete it. 
+        comment.deleteRecord();
+
       },function(error) {
         comment.deleteRecord();
-        self.set("errorMessage", error.responseJSON.errors);
+        self.set("errorMessage",error.responseJSON.errors );
         self.set("hasError", true);
         btn.button("reset");
       });

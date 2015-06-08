@@ -6,6 +6,7 @@ export default DS.Model.extend({
   post_name: DS.attr("string"),
   created_at: DS.attr("date"),
   updated_at: DS.attr("date"),
+  post_id: DS.attr("number"),
 
   user: DS.belongsTo("user"),
   comment: DS.belongsTo("comment", {async: true})

@@ -3,9 +3,6 @@ import Ember from "ember";
 export default Ember.ArrayController.extend({
   needs: ["login","posts/new", "post"],
 
-  sortProperties: ["created_at"],
-  sortAscending: false,
-
   page: 1,
   postId: null,
   totalPages: null,

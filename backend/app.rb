@@ -251,7 +251,11 @@ end
 get "/users/:id" do
   if (user = User.find_by_id(params[:id]))
     notifications = user.notifications
-    notifications_array = notifications.map {|noti| noti.custom_serialize("user_id", "comment_id")}
+    notifications_array = notifications.map do |noti|
+      notiHash = noti.custom_serialize("user_id", "comment_id")
+      notiHash.store("post_id", noti.comment.post.id)
+      notiHash
+    end
 
     user_hash = user.custom_serialize
     user_hash.store("notifications", user.notification_ids)
@@ -274,7 +278,11 @@ end
 get "/users" do
   if user = User.find_by_name(params[:name])
     notifications = user.notifications
-    notifications_array = notifications.map {|noti| noti.custom_serialize("user_id", "comment_id")}
+    notifications_array = notifications.map do |noti|
+      notiHash = noti.custom_serialize("user_id", "comment_id")
+      notiHash.store("post_id", noti.comment.post.id)
+      notiHash
+    end
 
     user_hash = user.custom_serialize
     user_hash.store("notifications", user.notification_ids)
@@ -343,7 +351,11 @@ end
 get "/comments/:id" do
   if (comment = Comment.find_by_id(params[:id]))
     notifications = comment.notifications
-    notifications_array = notifications.map {|noti| noti.custom_serialize("user_id", "comment_id")}
+    notifications_array = notifications.map do |noti|
+      notiHash = noti.custom_serialize("user_id", "comment_id")
+      notiHash.store("post_id", noti.comment.post.id)
+      notiHash
+    end
 
     comment_hash = comment.custom_serialize("post_id", "user_id")
     comment_hash.store("userAvatar", comment.user.avatar_url)
@@ -363,11 +375,9 @@ get "/comments/:id" do
 end
 
 post "/comments" do
-  request.body.rewind
-  data = JSON.parse request.body.read
   if is_login?
-    post_id = data["comment"]["post"]
-    comment = current_user.comments.build(data["comment"].keep_if{ |key, value| key == "body"})
+    post_id = params[:post]
+    comment = current_user.comments.build(params[:comment].keep_if { |key, value| key == "body"})
     if Post.exists?(post_id)
       comment.post_id = post_id
     else
@@ -377,6 +387,18 @@ post "/comments" do
       post = Post.find(post_id)
       post.last_reply_time = comment.created_at
       post.save
+      
+      if comment.user != post.user
+        Notification.create(user_id: post.user.id, comment_id: comment.id, user_name: comment.user.name, post_name: post.title)
+      end
+
+      if !params[:atwhoList].nil?
+        params[:atwhoList].each do |id|
+          Notification.create(user_id: id, comment_id: comment.id, user_name: comment.user.name, post_name: post.title, atwho: true)
+        end
+      end
+
+      
       comment_hash = comment.custom_serialize("user_id", "post_id")
       comment_hash.store("userAvatar", comment.user.avatar_url)
       comment_hash.store("commentUserName", comment.user.name)
@@ -396,6 +418,7 @@ end
 get "/notifications/:id" do
   if (notification = Notification.find_by_id(params[:id]))
     notification_hash = notification.custom_serialize("user_id", "comment_id")
+    notification_hash.store("post_id", notification.comment.post.id)
 
     output_hash = {notification: notification_hash}
 
