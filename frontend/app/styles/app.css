@@ -105,6 +105,10 @@ div.all-contents ul.content-list li:last-child {
   border-radius: 0;
 }
 
+div.all-contents ul.content-list div.content {
+  margin-right: 60px;
+  margin-left: 75px;
+}
 
 div.reply a {
   margin: 15px 25px;
@@ -115,6 +119,9 @@ div.reply a {
 
 div.all-contents div.title {
   font-size: 1.4em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 div.all-contents div.title a {
@@ -126,6 +133,9 @@ div.all-contents div.info {
   color: #aaa;
   font-size: 1.1em;
   margin-top: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 div.all-contents div.info a {
@@ -235,6 +245,13 @@ li.comment div.comment-info {
   color: #aaa;
   font-size: 0.9em;
   padding-top: 5px;
+  margin-left: 75px;
+  margin-right: 60px;
+}
+
+li.comment div.comment-content {
+  margin-left: 75px;
+  margin-right: 60px;
 }
 
 li.comment div.comment-info a {
@@ -298,8 +315,9 @@ div.user-header div.since-date {
   margin-top: 5px;
 }
 
-ul.user-detail li {
+ul.user-detail > li {
   border: none;
+  word-break: break-all;
 }
 
 ul.user-detail li span {
@@ -350,6 +368,7 @@ div.user-content ul li {
   border: none;
   background-color: transparent;
   color: #066;
+  word-break: break-all;
 }
 
 div.user-content ul li span {
@@ -549,4 +568,62 @@ div.post-new-page div.editor-preview {
     -webkit-transform: scale(1.0);
     opacity: 0;
   }
+}
+
+/* responsive style*/
+
+@media screen and (max-width: 768px) {
+  div.site_title {
+    float: none;
+    text-align: center;
+    height: auto;
+    padding: 5px;
+  }
+
+  ul.navbar-nav {
+    float: left;
+  }
+
+  ul.navbar-nav > li {
+    float: left;
+  }
+
+  ul.navbar-right {
+    float: right;
+  }
+
+  div.reply a {
+    margin: 13px 24px;
+  }
+
+  div.all-contents div.avatar img {
+    width: 55px;
+    height: 55px;
+  }
+
+  div.all-contents div.title {
+    font-size: 1.3em;
+  }
+
+  div.all-contents div.info {
+    font-size: 1em;
+  }
+
+  div.post-title h1 {
+    font-size: 1.4em;
+  }
+
+  div.comments-number {
+    font-size: 1em;
+  }
+
+  div.user-header div.user-name {
+    font-size: 1.2em;
+  }
+
+  div.user-tab > ul li a {
+    font-size: 1em;
+  }
+
+
 }
