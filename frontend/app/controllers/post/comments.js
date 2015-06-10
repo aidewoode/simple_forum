@@ -1,7 +1,7 @@
 import Ember from "ember";
 
 export default Ember.ArrayController.extend({
-  needs: ["login","posts/new", "post"],
+  needs: ["login","editor", "post"],
 
   page: 1,
   postId: null,
@@ -30,11 +30,16 @@ export default Ember.ArrayController.extend({
 
   actions: {
     transToCommentMode: function(atWho) {
-      this.set("controllers.posts/new.isCreateComment", true);
+      this.set("controllers.editor.isCreateComment", true);
+
+      this.set("controllers.editor.modalTitle", "Create your new comment");
+      this.set("controllers.editor.createMode", "createComment");
+      this.set("controllers.editor.buttonContent", "Create");
+      this.set("controllers.editor.buttonLoadContent", "Creating");
 
       //reset error message.
-      this.set("controllers.posts/new.hasError", false);
-      this.set("controllers.posts/new.post", this.get("post"));
+      this.set("controllers.editor.hasError", false);
+      this.set("controllers.editor.post", this.get("post"));
 
       if (Ember.isEmpty(atWho)) {
 
@@ -46,7 +51,7 @@ export default Ember.ArrayController.extend({
         // and the textarea element did't insert in DOM.
         // use posts.new controller to send the atWho value to 
         // custom-textarea view.
-        this.set("controllers.posts/new.atWho", atWho);
+        this.set("controllers.editor.atWho", atWho);
 
         Ember.$("textarea.comment-editor").val("@" + atWho + " ");
       }
@@ -67,7 +72,7 @@ export default Ember.ArrayController.extend({
         atwhoItems.push({name: atwhoUserName[i], id: atwhoUserId[i] });
       }
 
-      this.set("controllers.posts/new.atwhoItems", atwhoItems); 
+      this.set("controllers.editor.atwhoItems", atwhoItems); 
 
 
         Ember.$("textarea.comment-editor").atwho({
@@ -104,5 +109,4 @@ export default Ember.ArrayController.extend({
     }
 
   }
-
 });

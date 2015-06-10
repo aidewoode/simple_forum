@@ -144,27 +144,6 @@ div.all-contents div.info a {
   font-weight: 600;
 }
 
-div.all-contents div.pagination-centered {
-  text-align: center;
-}
-
-div.all-contents ul.pagination li a{
-  border: none;
-  color: rgb(66, 156, 214);
-  font-size: 1.2em;
-}
-
-div.all-contents ul.pagination li.disabled a {
-  color: #555;
-}
-
-div.all-contents ul.pagination li.active a {
-  font-weight: 600;
-  color: #555;
-  background-color: #fff;
-}
-
-
 /* post page style*/
 
 div.post-title {
@@ -290,6 +269,12 @@ li.comment div.comment-info a {
 
 .static-alert a {
   color: #f60;
+}
+
+.edit-icon {
+  color: #555;
+  vertical-align: middle;
+  font-weight: bold;
 }
 
 /* user page style*/
@@ -453,41 +438,41 @@ div.user-tab > ul li a.active {
   border-top-style: dashed;
 }
 
-/* post new page style*/
+/* editor style */
 
-div.post-new-page {
+div.custom-editor {
   border: none;
 }
 
-div.post-new-page div.panel-heading {
+div.custom-editor div.panel-heading {
   background-color: rgb(66, 156, 214);
   color: #fff;
   margin-bottom: 20px;
   border-radius: 6px;
 }
 
-div.post-new-page input.post-title {
+div.custom-editor input.post-title {
   border: none;
   box-shadow: none;
   border-radius: 0;
 }
 
-div.post-new-page input.post-title:focus {
+div.custom-editor input.post-title:focus {
   background-color: #eee;
 }
 
-div.post-new-page select {
+div.custom-editor select {
   border: none;
   box-shadow: none;
 }
 
-div.post-new-page select:focus{
+div.custom-editor select:focus{
   outline: none;
   box-shadow: none;
   background-color: #eee;
 }
 
-div.post-new-page button[type="submit"] {
+div.custom-editor button[type="submit"] {
   margin-top: 35px;
   background-color: rgb(66, 156, 214);
   border-radius: 6px;
@@ -496,31 +481,31 @@ div.post-new-page button[type="submit"] {
   padding: 8px 40px;
 }
 
-div.post-new-page button[type="submit"]:focus {
+div.custom-editor button[type="submit"]:focus {
   outline: none;
 }
 
-div.post-new-page button[type="submit"]:hover {
+div.custom-editor button[type="submit"]:hover {
   color: #fff;
   opacity: 0.85;
 }
 
-div.post-new-page textarea.editor {
+div.custom-editor textarea.editor {
   box-shadow: none;
   resize: none;
 }
 
-div.post-new-page textarea.editor:focus {
+div.custom-editor textarea.editor:focus {
   border-color: rgb(66, 156, 214);
 }
 
-div.post-new-page #preview {
+div.custom-editor #preview {
   height: 350px;
   overflow: scroll;
   border: 1px solid #eee;
 }
 
-div.post-new-page div.editor-preview {
+div.custom-editor div.editor-preview {
   max-width: 800px;
 }
 
@@ -578,6 +563,7 @@ div.post-new-page div.editor-preview {
     text-align: center;
     height: auto;
     padding: 5px;
+    font-size: 1.2em;
   }
 
   ul.navbar-nav {

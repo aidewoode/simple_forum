@@ -1,5 +1,5 @@
 {{#if isAuthenticated}}
-<button  class="center-block btn btn-default normal-button" {{action "transToCommentMode" }} data-toggle="modal" data-target="#newPostForm" >Post a comment</button>
+<button  class="center-block btn btn-default normal-button" {{action "transToCommentMode" }} data-toggle="modal" data-target="#editor" >Post a comment</button>
 {{else}}
 <div class="static-alert container-fluid">
   You must <a href="#" data-toggle="modal" data-target="#loginForm">login</a> or  <a href="#" data-toggle="modal" data-target="#signupForm">signup</a> to post a comment
@@ -16,7 +16,9 @@
     <li class="comment list-group-item">
       {{#if isAuthenticated}}
       <div class="pull-right reply">
-        <a href="#" {{action "transToCommentMode" comment.commentUserName}} data-toggle="modal" data-target="#newPostForm"><span class="glyphicon glyphicon-menu-down" aria-label="reply" aria-hidden="true"></span></a> 
+        <a href="#" {{action "transToCommentMode" comment.commentUserName}} data-toggle="modal" data-target="#editor">
+          <span class="glyphicon glyphicon-menu-down" aria-label="reply" aria-hidden="true"></span>
+        </a> 
       </div>
       {{/if}}
       <div class="pull-left avatar">

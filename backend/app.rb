@@ -241,7 +241,26 @@ post "/posts" do
   else
     halt 401 ,json({})
   end
+end
 
+put "/posts/:id" do
+  request.body.rewind
+  data = JSON.parse request.body.read
+
+  if is_login?
+    post = Post.find(params[:id])
+    if current_user == post.user
+      if post.update_attributes(data["post"].keep_if { |key, value| key == "body" or key == "tag" or key == "title"})
+        halt 201, json({})
+      else
+        halt 422 ,json({errors: post.errors.full_messages[0]})
+      end
+    else
+      halt 401, json({})
+    end
+  else
+    halt 401, json({})
+  end
 end
 
 

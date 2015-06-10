@@ -11,6 +11,10 @@ export default Ember.Controller.extend({
   post: null,
   atwhoItems: null,
   atWho: null,
+  modalTitle: null,
+  createMode: null,
+  buttonContent: null,
+  buttonLoadContent: null,
 
   actions: {
 
@@ -26,7 +30,14 @@ export default Ember.Controller.extend({
           var matchString = inputContent.slice(position+1, lastIndex);
           for (var i = 0; i < this.get("atwhoItems").length; i++) {
             if (matchString === this.get("atwhoItems")[i]["name"]) {
-              inputContent = inputContent.replace("@"+matchString, "<a data-userid=\""+ this.get("atwhoItems")[i]["id"] + "\"class=\"atwho\"href=\"/user/" + this.get("atwhoItems")[i]["id"] + "/posts\">@<span>"+ matchString + "</span></a>");
+              inputContent = inputContent.replace("@"+matchString, "<a data-userid=\""
+                                                  + this.get("atwhoItems")[i]["id"] 
+                                                  + "\"class=\"atwho\"href=\"/user/"
+                                                  + this.get("atwhoItems")[i]["id"] 
+                                                  + "/posts\">@<span>"
+                                                  + matchString 
+                                                  + "</span></a>"
+                                                 );
             }
           }
           
@@ -64,6 +75,7 @@ export default Ember.Controller.extend({
      });
     },
 
+    // createComment action need improve.
     createComment: function() {
 
       //to be sure the div.editor-preview element
@@ -136,5 +148,30 @@ export default Ember.Controller.extend({
         btn.button("reset");
       });
     },
+
+    updatePost: function() {
+      this.send("mdPreview");
+
+      var self = this;
+      var btn = Ember.$("#createButton").button("loading");
+
+      var post = this.get("post");
+      post.set("tag", this.get("tag"));
+      post.set("title", this.get("title"));
+      post.set("body", Ember.$("div.editor-preview").html());
+
+      post.save().then(function(response){
+        btn.button("reset");
+        Ember.$("#newPostForm").modal("hide");
+        
+      },function(error){
+        post.rollback();
+        self.set("errorMessage", error.responseJSON.errors);
+        self.set("hasError", true);
+        btn.button("reset");
+      } );
+      
+    }
+
   }
 });

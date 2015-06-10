@@ -12,6 +12,13 @@
     <span>发表.</span>
     {{date-format model.created_at}}
 
+    {{#if isCurrentUser}}
+    <span>. </span>
+    <a href="#" {{action "editPost"}} data-toggle="modal" data-target="#editor">
+    <span class="glyphicon glyphicon-pencil edit-icon" aria-hidden="true"></span>
+    </a>
+    {{/if}}
+
   </div>
   <div class="clearfix"></div>
 </div>

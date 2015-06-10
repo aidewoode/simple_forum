@@ -1,7 +1,7 @@
 import Ember from "ember";
 
 export default Ember.Controller.extend({
-  needs: ["login", "signup", "posts/new"],
+  needs: ["login", "signup", "editor"],
 
   currentUser: function() {
     if (!Ember.isEmpty(this.get("controllers.login.currentUser"))) {
@@ -15,9 +15,19 @@ export default Ember.Controller.extend({
 
   actions: {
     transToPostMode: function() {
-      this.set("controllers.posts/new.isCreateComment", false);
+      this.set("controllers.editor.isCreateComment", false);
+
+      this.set("controllers.editor.modalTitle", "Create your new post");
+      this.set("controllers.editor.createMode", "createPost");
+      this.set("controllers.editor.buttonContent", "Create");
+      this.set("controllers.editor.buttonLoadContent", "Creating");
+
       // reset error message
-      this.set("controllers.posts/new.hasError", false);
+      this.set("controllers.editor.hasError", false);
+      // reset editor's content
+      this.set("controllers.editor.tag", null);
+      this.set("controllers.editor.title", null);
+      Ember.$("textarea.post-editor").val("");
     },
 
     logOut: function() {
