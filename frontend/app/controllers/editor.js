@@ -55,17 +55,30 @@ export default Ember.Controller.extend({
 
       var self = this;
       var btn = Ember.$("#createButton").button("loading"); 
-     var post = this.store.createRecord("post", {
-       title: this.get("title") ,
-       body: Ember.$("div.editor-preview").html(),
-       tag: this.get("tag")
-     }); 
+      var post = this.store.createRecord("post", {
+        title: this.get("title") ,
+        body: Ember.$("div.editor-preview").html(),
+        tag: this.get("tag")
+      }); 
 
      post.save().then(function(record) {
        btn.button("reset");
-       Ember.$("#newPostForm").modal("hide");
+       Ember.$("#editor").modal("hide");
        self.get("controllers.index.model").unshiftObject(record);
-       self.get("controllers.index.model").popObject();
+
+        // when the the number of posts is less than 10, 
+        // don't need to remove the last comment
+        // to insure have current pagination for the backend. 
+        if (self.get("controllers.index.model.length") > 10) {
+
+          self.get("controllers.index.model").popObject();
+
+          //when the number of posts is 11 and the totalPages didn't change.
+          //set the index's totalPages to 2, let the user can load next page.
+          if (self.get("controllers.index.totalPages") === 1) {
+            self.set("controllers.index.totalPages", 2);
+          }
+        }
 
      }, function(error) {
        post.deleteRecord();
@@ -106,12 +119,11 @@ export default Ember.Controller.extend({
         },
         atwhoList: atwhoIds.uniq()
       };
-      console.log(data);
 
       Ember.$.post("/comments", data).then(function(response) {
 
         btn.button("reset");
-        Ember.$("#newPostForm").modal("hide");
+        Ember.$("#editor").modal("hide");
         response.comment.created_at = comment.get("created_at");
 
         var commentObject = Ember.Object.create(response.comment);
@@ -162,7 +174,7 @@ export default Ember.Controller.extend({
 
       post.save().then(function(response){
         btn.button("reset");
-        Ember.$("#newPostForm").modal("hide");
+        Ember.$("#editor").modal("hide");
         
       },function(error){
         post.rollback();

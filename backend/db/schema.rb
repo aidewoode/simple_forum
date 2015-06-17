@@ -27,26 +27,26 @@ ActiveRecord::Schema.define(version: 20150510120155) do
   create_table "notifications", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "comment_id"
-    t.boolean  "read",                   default: false
+    t.boolean  "read",       default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "user_name",  limit: 255
-    t.boolean  "atwho",                  default: false
-    t.string   "post_name",  limit: 255
+    t.string   "user_name"
+    t.boolean  "atwho",      default: false
+    t.string   "post_name"
   end
 
   add_index "notifications", ["comment_id"], name: "index_notifications_on_comment_id"
   add_index "notifications", ["user_id"], name: "index_notifications_on_user_id"
 
   create_table "posts", force: :cascade do |t|
-    t.string   "title",           limit: 255
+    t.string   "title"
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "tag",             limit: 255
+    t.string   "tag"
     t.integer  "user_id"
-    t.boolean  "essence",                     default: false
-    t.boolean  "top",                         default: false
+    t.boolean  "essence",         default: false
+    t.boolean  "top",             default: false
     t.datetime "last_reply_time"
   end
 
@@ -61,16 +61,16 @@ ActiveRecord::Schema.define(version: 20150510120155) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "name",            limit: 255
-    t.string   "email",           limit: 255
-    t.string   "password_digest", limit: 255
+    t.string   "name"
+    t.string   "email"
+    t.string   "password_digest"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "admin",                       default: false
-    t.string   "city",            limit: 255
+    t.boolean  "admin",           default: false
+    t.string   "city"
     t.text     "info"
-    t.string   "avatar",          limit: 255
-    t.string   "fake",            limit: 255
+    t.string   "avatar"
+    t.string   "fake"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
