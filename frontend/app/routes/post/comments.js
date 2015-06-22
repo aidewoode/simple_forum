@@ -6,7 +6,7 @@ export default Ember.Route.extend({
     return this.store.find("comment", {page: 1, per_page: 10, post_id: post_id});
   },
 
-  //In ember-data 1.0.0-beta.19+ longer support 
+  //In ember-data 1.0.0-beta.19+ no longer support 
   //the pushObject ,unshiftObject and so on menthods to 
   //add Object to RecordArrays. 
   //So I use normal array to solve this problem.
