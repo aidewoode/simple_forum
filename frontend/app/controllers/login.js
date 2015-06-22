@@ -1,4 +1,5 @@
 import Ember from "ember";
+/* global Cookies */
 
 export default Ember.Controller.extend({
 

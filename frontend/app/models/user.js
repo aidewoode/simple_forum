@@ -10,6 +10,7 @@ export default DS.Model.extend({
   info: DS.attr("string"),
   avatar: DS.attr("string"),
   fake: DS.attr("string"),
+  admin: DS.attr("boolean", {defaultValue: false}),
 
   posts: DS.hasMany("post", {async: true}),
   comments: DS.hasMany("comment", {async: true}),

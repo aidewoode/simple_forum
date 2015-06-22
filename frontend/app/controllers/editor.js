@@ -1,4 +1,5 @@
 import Ember from "ember";
+/* global marked */
 
 export default Ember.Controller.extend({
   needs: ["index", "post/comments", "post"],
@@ -30,13 +31,13 @@ export default Ember.Controller.extend({
           var matchString = inputContent.slice(position+1, lastIndex);
           for (var i = 0; i < this.get("atwhoItems").length; i++) {
             if (matchString === this.get("atwhoItems")[i]["name"]) {
-              inputContent = inputContent.replace("@"+matchString, "<a data-userid=\""
-                                                  + this.get("atwhoItems")[i]["id"] 
-                                                  + "\"class=\"atwho\"href=\"/user/"
-                                                  + this.get("atwhoItems")[i]["id"] 
-                                                  + "/posts\">@<span>"
-                                                  + matchString 
-                                                  + "</span></a>"
+              inputContent = inputContent.replace("@"+ matchString, "<a data-userid=\"" +
+                                                   this.get("atwhoItems")[i]["id"] +
+                                                   "\"class=\"atwho\"href=\"/user/" +
+                                                   this.get("atwhoItems")[i]["id"] +
+                                                   "/posts\">@<span>" +
+                                                   matchString +
+                                                   "</span></a>" 
                                                  );
             }
           }
@@ -64,14 +65,13 @@ export default Ember.Controller.extend({
      post.save().then(function(record) {
        btn.button("reset");
        Ember.$("#editor").modal("hide");
-       self.get("controllers.index.model").unshiftObject(record);
-
+       self.get("controllers.index.postArray").unshiftObject(record);
         // when the the number of posts is less than 10, 
         // don't need to remove the last comment
         // to insure have current pagination for the backend. 
-        if (self.get("controllers.index.model.length") > 10) {
+        if (self.get("controllers.index.postArray.length") > 10) {
 
-          self.get("controllers.index.model").popObject();
+          self.get("controllers.index.postArray").popObject();
 
           //when the number of posts is 11 and the totalPages didn't change.
           //set the index's totalPages to 2, let the user can load next page.
@@ -111,9 +111,10 @@ export default Ember.Controller.extend({
         body: Ember.$("div.editor-preview").html(),
         post: self.get("post"),
       });
+      console.log(self.get("post"));
 
       var data = {
-        post: self.get("post").get("id"),
+        post: self.get("post").id,
         comment: {
           body: Ember.$("div.editor-preview").html()
         },
@@ -128,7 +129,8 @@ export default Ember.Controller.extend({
 
         var commentObject = Ember.Object.create(response.comment);
 
-        self.get("controllers.post/comments.model").unshiftObject(commentObject);
+        // have some problem here, need to fixed
+        self.get("controllers.post/comments.commentArray").unshiftObject(commentObject);
 
 
         //increase commentsCount's value 
@@ -139,7 +141,7 @@ export default Ember.Controller.extend({
         // to insure have current pagination for the backend. 
         if (self.get("controllers.post.model.commentsCount") > 10) {
 
-          self.get("controllers.post/comments.model").popObject();
+          self.get("controllers.post/comments.commentArray").popObject();
 
           //when a post's commentsCount is 11 and the totalPages didn't change.
           //set the comments's totalPages to 2, let the user can load next page.
@@ -172,7 +174,7 @@ export default Ember.Controller.extend({
       post.set("title", this.get("title"));
       post.set("body", Ember.$("div.editor-preview").html());
 
-      post.save().then(function(response){
+      post.save().then(function(){
         btn.button("reset");
         Ember.$("#editor").modal("hide");
         

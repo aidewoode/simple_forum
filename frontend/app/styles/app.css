@@ -258,6 +258,34 @@ li.comment div.comment-info a {
   border-color: rgb(66, 156, 214);
 }
 
+.delete-button {
+  border-color: #f20;
+  border-radius: 6px;
+  color: #f20;
+  border-width: 2px;
+}
+
+.delete-button:hover {
+  color: #fff;
+  background-color: #f20;
+  border-color: #f20;
+}
+
+.delete-button:focus {
+  outline: none;
+  background-color: #f20;
+  color: #fff;
+  border-color: #f20; 
+}
+
+.warning-text {
+  color: #f60;
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+
+
 .static-alert {
   background-color: #ffc;
   text-align: center;
@@ -275,6 +303,11 @@ li.comment div.comment-info a {
   color: #555;
   vertical-align: middle;
   font-weight: bold;
+}
+
+.delete-icon {
+  vertical-align: middle;
+  color: #f20;
 }
 
 /* user page style*/

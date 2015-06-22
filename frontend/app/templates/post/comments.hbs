@@ -12,7 +12,7 @@
   </div>
 {{/if}}
 <ul class="list-group comments">
-  {{#each comment in model}}
+  {{#each comment in commentArray}}
     <li class="comment list-group-item">
       {{#if isAuthenticated}}
       <div class="pull-right reply">
@@ -27,6 +27,14 @@
       <div class="comment-info">
         {{#link-to "user.posts" comment.user_id}}{{comment.commentUserName}}{{/link-to}}
         <span>.{{date-format comment.created_at}}</span>
+
+        {{#if currentUser.admin}}
+        <span>. </span>
+        <a href="#" {{action "deleteComment" comment}} data-toggle="modal" data-target="#delete-confirm">
+          <span class="glyphicon glyphicon-trash delete-icon" aria-hidden="true"></span>
+        </a>
+        {{/if}}
+
       </div>
       <div class="entry comment-content">
         {{{comment.body}}}
@@ -35,7 +43,7 @@
     </li>
   {{/each}}
   
-  {{#if model.length}}
+  {{#if commentArray.length}}
     {{#if isEnd}}
     <button class="center-block btn btn-default normal-button" disabled="disabled">No more</button>
     {{else}}

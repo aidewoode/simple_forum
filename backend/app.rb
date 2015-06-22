@@ -247,17 +247,23 @@ put "/posts/:id" do
   request.body.rewind
   data = JSON.parse request.body.read
 
-  if is_login?
-    post = Post.find(params[:id])
-    if current_user == post.user
-      if post.update_attributes(data["post"].keep_if { |key, value| key == "body" or key == "tag" or key == "title"})
-        halt 201, json({})
-      else
-        halt 422 ,json({errors: post.errors.full_messages[0]})
-      end
+  post = Post.find(params[:id])
+  if current_user == post.user
+    if post.update_attributes(data["post"].keep_if { |key, value| key == "body" or key == "tag" or key == "title"})
+      halt 201, json({})
     else
-      halt 401, json({})
+      halt 422 ,json({errors: post.errors.full_messages[0]})
     end
+  else
+    halt 401, json({})
+  end
+
+end
+
+delete "/posts/:id" do
+  if current_user.admin?
+    Post.find(params[:id]).destroy
+    halt 201, json({})
   else
     halt 401, json({})
   end
@@ -281,7 +287,6 @@ get "/users/:id" do
     user_hash.store("posts", user.post_ids)
     user_hash.store("comments", user.comment_ids)
     user_hash.delete("password_digest")
-    user_hash.delete("admin")
     user_hash["avatar"] = user.avatar_url
 
     output_hash = {user: user_hash}
@@ -292,32 +297,6 @@ get "/users/:id" do
     halt 404, json({})
   end
 
-end
-
-get "/users" do
-  if user = User.find_by_name(params[:name])
-    notifications = user.notifications
-    notifications_array = notifications.map do |noti|
-      notiHash = noti.custom_serialize("user_id", "comment_id")
-      notiHash.store("post_id", noti.comment.post.id)
-      notiHash
-    end
-
-    user_hash = user.custom_serialize
-    user_hash.store("notifications", user.notification_ids)
-    user_hash.store("posts", user.post_ids)
-    user_hash.store("comments", user.comment_ids)
-    user_hash.delete("password_digest")
-    user_hash.delete("admin")
-    user_hash["avatar"] = user.avatar_url
-
-    output_hash = {user: user_hash}
-    output_hash.store("notifications", notifications_array)
-
-    json output_hash
-  else
-    halt 404, json({})
-  end
 end
 
 post "/users" do
@@ -327,13 +306,21 @@ post "/users" do
   if user.save
     user_hash = user.custom_serialize
     user_hash.delete("password_digest")
-    user_hash.delete("admin")
     user_hash.store("token", user.session_active_token)
     halt 201, json({user: user_hash})
   else
     halt 422 ,json({errors: user.errors.full_messages[0]})
   end
+end
 
+delete "/users/:id" do
+  user = User.find(params[:id])
+  if current_user.admin? and current_user != user 
+    user.destroy
+    halt 201, json({})
+  else
+    halt 401, json({})
+  end
 end
 
 
@@ -432,6 +419,15 @@ post "/comments" do
   end
 end
 
+delete "/comments/:id" do
+  if current_user.admin?
+    Comment.find(params[:id]).destroy
+    halt 201, json({})
+  else
+    halt 401, json({})
+  end
+end
+
 #notification routes
 
 get "/notifications/:id" do
@@ -483,7 +479,7 @@ end
 #
 post "/session" do
   user = User.find_by_email(params[:email])
-  if user && user.authenticate(params[:password])
+  if user and user.authenticate(params[:password])
     halt 201, json({token: user.session_active_token})
   else
     halt 401, json({})

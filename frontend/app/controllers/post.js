@@ -1,15 +1,21 @@
 import Ember from "ember";
 
 export default Ember.Controller.extend({
-  needs: ["login","editor"],
+  needs: ["login","editor", "delete-confirm"],
 
   isAuthenticated: function() {
     return !Ember.isEmpty(this.get("controllers.login.currentUser"));
   }.property("controllers.login.currentUser"),
 
   isCurrentUser: function() {
-    return this.get("model.user_id").toString() === this.get("controllers.login.currentUser")
+    return this.get("model.user_id").toString() === this.get("controllers.login.currentUser");
   }.property("controllers.login.currentUser", "model.user_id"),
+
+  currentUser: function() {
+    if (this.get("isAuthenticated")) {
+      return this.store.find("user", this.get("controllers.login.currentUser"));
+    }
+  }.property("isAuthenticated","controllers.login.currentUser"),
 
   actions: {
     editPost: function() {
@@ -30,8 +36,15 @@ export default Ember.Controller.extend({
 
       Ember.$("textarea.post-editor").val(this.get("model.body"));
 
+    },
+
+    deletePost: function(post) {
+      this.set("controllers.delete-confirm.deleteMode", "deletePost");
+      this.set("controllers.delete-confirm.post", post);
     }
-  }
+
+  },
+
     
 
 });

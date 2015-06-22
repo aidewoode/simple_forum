@@ -4,6 +4,7 @@ export default Ember.ArrayController.extend({
 
   page: 1,
   totalPages: null,
+  postArray: null,
 
   isEnd: function() {
     if (this.get("page") === this.get("totalPages")) {
@@ -22,7 +23,7 @@ export default Ember.ArrayController.extend({
 
       Ember.$.get("/posts?page=" + page + "&per_page=10").then(function(response) {
         self.store.pushMany("post", response.posts);
-        self.get("model").pushObjects(response.posts);
+        self.get("postArray").pushObjects(response.posts);
         self.set("page", page);
 
         self.set("totalPages", response.meta.total_pages);

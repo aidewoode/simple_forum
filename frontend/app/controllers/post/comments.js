@@ -1,11 +1,12 @@
 import Ember from "ember";
 
 export default Ember.ArrayController.extend({
-  needs: ["login","editor", "post"],
+  needs: ["login","editor", "post", "delete-confirm"],
 
   page: 1,
   postId: null,
   totalPages: null,
+  commentArray: null,
 
   post: function() {
     return this.get("controllers.post.model");
@@ -26,6 +27,12 @@ export default Ember.ArrayController.extend({
   isAuthenticated: function() {
     return !Ember.isEmpty(this.get("controllers.login.currentUser"));
   }.property("controllers.login.currentUser"),
+
+  currentUser: function() {
+    if (this.get("isAuthenticated")) {
+      return this.store.find("user", this.get("controllers.login.currentUser"));
+    }
+  }.property("isAuthenticated","controllers.login.currentUser"),
 
 
   actions: {
@@ -100,13 +107,18 @@ export default Ember.ArrayController.extend({
           commentList.push(commentObject);
         });
 
-        self.get("model").pushObjects(commentList);
+        self.get("commentArray").pushObjects(commentList);
         self.set("page", page);
 
         self.set("totalPages", response.meta.total_pages);
         btn.button("reset");
       });
-    }
+    },
+
+    deleteComment: function(comment) {
+      this.set("controllers.delete-confirm.deleteMode", "deleteComment");
+      this.set("controllers.delete-confirm.comment", comment);
+    },
 
   }
 });

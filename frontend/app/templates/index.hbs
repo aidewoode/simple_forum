@@ -1,6 +1,6 @@
 <div class="container all-contents">
   <ul class="content-list list-group">
-    {{#each post in model}}
+    {{#each post in postArray}}
     <li class="list-group-item {{post-class-name post.top isEssence=post.essence}}">
       {{#if post.commentsCount}}
       <div class="pull-right reply">
