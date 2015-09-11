@@ -15,7 +15,7 @@
     <div class="modal-body">
       <div class="user-notifications">
       <ul class="list-group">
-        {{#each noti in currentUser.notifications}}
+        {{#each currentUser.notifications as |noti|}}
         <li class="list-group-item {{if noti.read "disabled"}}">
           <span {{action "removeNoti" noti}}class="glyphicon glyphicon-remove pull-right remove"></span>
             {{#if noti.atwho}}

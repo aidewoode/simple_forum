@@ -1,17 +1,13 @@
-import Ember from "ember"; 
+import Ember from "ember";
 
-export default Ember.ArrayController.extend({
+export default Ember.Controller.extend({
 
   page: 1,
   totalPages: null,
   postArray: null,
 
   isEnd: function() {
-    if (this.get("page") === this.get("totalPages")) {
-      return true;
-    } else {
-      return false;
-    }
+    return this.get("page") === this.get("totalPages");
   }.property("page", "totalPages"),
 
   actions: {
@@ -31,5 +27,4 @@ export default Ember.ArrayController.extend({
       });
     }
   }
-}); 
-
+});

@@ -1,7 +1,8 @@
 import Ember from "ember";
 
 export default Ember.Controller.extend({
-  needs: "login",
+  loginController: Ember.inject.controller("login"),
+
   hasError: false,
   errorMessage: null,
 
@@ -19,8 +20,8 @@ export default Ember.Controller.extend({
       user.save().then(function(response) {
         user.set("password", null);
         user.set("password_confirmation", null);
-        self.set("controllers.login.token", response.get("data").token.access_token);
-        self.set("controllers.login.currentUser", response.get("data").id);
+        self.set("loginController.token", response.get("data").token.access_token);
+        self.set("loginController.currentUser", response.get("data").id);
         btn.button("reset");
         Ember.$("#signupForm").modal("hide");
       }, function(error) {
@@ -30,6 +31,6 @@ export default Ember.Controller.extend({
         self.set("hasError", true);
         btn.button("reset");
       });
-    } 
+    }
   }
 });

@@ -12,7 +12,7 @@
   </div>
 {{/if}}
 <ul class="list-group comments">
-  {{#each comment in commentArray}}
+  {{#each commentArray as |comment|}}
     <li class="comment list-group-item">
       {{#if isAuthenticated}}
       <div class="pull-right reply">

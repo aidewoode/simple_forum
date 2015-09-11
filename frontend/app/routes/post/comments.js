@@ -3,7 +3,7 @@ import Ember from "ember";
 export default Ember.Route.extend({
   model: function(params, transition) {
     var post_id = transition.params.post.id;
-    return this.store.find("comment", {page: 1, per_page: 10, post_id: post_id});
+    return this.store.query("comment", {page: 1, per_page: 10, post_id: post_id});
   },
 
   //In ember-data 1.0.0-beta.19+ no longer support 
@@ -15,11 +15,11 @@ export default Ember.Route.extend({
     var commentArray = [];
     commentArray.addObjects(comments);
     this.controllerFor("post/comments").set("commentArray", commentArray);
+    this.controllerFor("post/comments").set("totalPages", comments.get("meta").total_pages);
   },
 
   setupController: function(controller) {
 
-    controller.set("totalPages", this.store.metadataFor("comment").total_pages);
     controller.set("postId", this.paramsFor("post").id);
 
     // reset page property

@@ -1,7 +1,7 @@
 {{#if model.length}}
 <div class="container-fluid user-content">
   <ul class="list-group">
-    {{#each comment in model}}
+    {{#each model as |comment|}}
       <li class="list-group-item">
         <div class="list-group-item-heading">{{comment.commentPostName}} </div>
         <div class="list-group-item-text entry">

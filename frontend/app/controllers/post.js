@@ -1,50 +1,49 @@
 import Ember from "ember";
 
 export default Ember.Controller.extend({
-  needs: ["login","editor", "delete-confirm"],
+  loginController: Ember.inject.controller("login"),
+  editorController: Ember.inject.controller("editor"),
+  deleteConfirmController: Ember.inject.controller("delete-confirm"),
 
   isAuthenticated: function() {
-    return !Ember.isEmpty(this.get("controllers.login.currentUser"));
-  }.property("controllers.login.currentUser"),
+    return !Ember.isEmpty(this.get("loginController.currentUser"));
+  }.property("loginController.currentUser"),
 
   isCurrentUser: function() {
-    return this.get("model.user_id").toString() === this.get("controllers.login.currentUser");
-  }.property("controllers.login.currentUser", "model.user_id"),
+    return this.get("model.user_id").toString() === this.get("loginController.currentUser");
+  }.property("loginController.currentUser", "model.user_id"),
 
   currentUser: function() {
     if (this.get("isAuthenticated")) {
-      return this.store.find("user", this.get("controllers.login.currentUser"));
+      return this.store.find("user", this.get("loginController.currentUser"));
     }
-  }.property("isAuthenticated","controllers.login.currentUser"),
+  }.property("isAuthenticated","loginController.currentUser"),
 
   actions: {
     editPost: function() {
-      this.set("controllers.editor.isCreateComment", false);
+      this.set("editorController.isCreateComment", false);
 
-      this.set("controllers.editor.modalTitle", "Update your post");
-      this.set("controllers.editor.createMode", "updatePost");
-      this.set("controllers.editor.buttonContent", "Update");
-      this.set("controllers.editor.buttonLoadContent", "Updating");
+      this.set("editorController.modalTitle", "Update your post");
+      this.set("editorController.createMode", "updatePost");
+      this.set("editorController.buttonContent", "Update");
+      this.set("editorController.buttonLoadContent", "Updating");
 
-      this.set("controllers.editor.post", this.get("model"));
+      this.set("editorController.post", this.get("model"));
 
       // reset error message
-      this.set("controllers.editor.hasError", false);
+      this.set("editorController.hasError", false);
 
-      this.set("controllers.editor.title", this.get("model.title"));
-      this.set("controllers.editor.tag", this.get("model.tag"));
+      this.set("editorController.title", this.get("model.title"));
+      this.set("editorController.tag", this.get("model.tag"));
 
       Ember.$("textarea.post-editor").val(this.get("model.body"));
 
     },
 
     deletePost: function(post) {
-      this.set("controllers.delete-confirm.deleteMode", "deletePost");
-      this.set("controllers.delete-confirm.post", post);
+      this.set("deleteConfirmController.deleteMode", "deletePost");
+      this.set("deleteConfirmController.post", post);
     }
 
   },
-
-    
-
 });

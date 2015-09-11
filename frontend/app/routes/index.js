@@ -3,7 +3,7 @@ import Ember from "ember";
 export default Ember.Route.extend({
 
   model: function() {
-    return this.store.find("post", {page: 1, per_page: 10});
+    return this.store.query("post", {page: 1, per_page: 10});
   },
 
 
@@ -16,12 +16,11 @@ export default Ember.Route.extend({
     var postArray = [];
     postArray.addObjects(posts);
     this.controllerFor("index").set("postArray", postArray);
+    this.controllerFor("index").set("totalPages", posts.get("meta").total_pages);
   },
 
 
   setupController: function(controller) {
-    controller.set("totalPages", this.store.metadataFor("post").total_pages);
-
     // reset page property
     controller.set("page", 1);
   }

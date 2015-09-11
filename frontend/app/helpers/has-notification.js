@@ -1,7 +1,7 @@
 import Ember from "ember";
 
-export default Ember.Handlebars.makeBoundHelper(function(notification) {
-  if (!Ember.isEmpty(notification)) {
+export default Ember.Helper.helper(function(params) {
+  if (!Ember.isEmpty(params[0])) {
     return "hasNotification";
   } else {
     return "";

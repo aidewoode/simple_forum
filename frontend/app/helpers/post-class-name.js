@@ -1,9 +1,12 @@
 import Ember from "ember";
 
-export default Ember.Handlebars.makeBoundHelper(function(isTop, options) {
+export default Ember.Helper.helper(function(params) {
+  let isTop = params[0];
+  let isEssence = params[1];
+
   if (isTop) {
     return "top-post";
-  } else if (options.hash["isEssence"]) {
+  } else if (isEssence) {
     return "essence-post";
   } else {
     return "";

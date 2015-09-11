@@ -1,6 +1,6 @@
 import Ember from "ember";
 /* global moment */
 
-export default Ember.Handlebars.makeBoundHelper(function(date) {
-  return moment(date).startOf("hourse").fromNow();
+export default Ember.Helper.helper(function(params) {
+  return moment(params[0]).startOf("hourse").fromNow();
 });

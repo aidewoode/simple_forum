@@ -1,7 +1,10 @@
 import Ember from "ember";
 
-export default Ember.ArrayController.extend({
-  needs: ["login","editor", "post", "delete-confirm"],
+export default Ember.Controller.extend({
+  loginController: Ember.inject.controller("login"),
+  editorController: Ember.inject.controller("editor"),
+  postController: Ember.inject.controller("post"),
+  deleteConfirmController: Ember.inject.controller("delete-confirm"),
 
   page: 1,
   postId: null,
@@ -9,56 +12,52 @@ export default Ember.ArrayController.extend({
   commentArray: null,
 
   post: function() {
-    return this.get("controllers.post.model");
-  }.property("controllers.post.model"),
+    return this.get("postController.model");
+  }.property("postController.model"),
 
   commentsCount: function() {
-    return this.get("controllers.post.model.commentsCount");
-  }.property("controllers.post.model.commentsCount"),
+    return this.get("postController.model.commentsCount");
+  }.property("postController.model.commentsCount"),
 
   isEnd: function() {
-    if (this.get("page") === this.get("totalPages")) {
-      return true;
-    } else {
-      return false;
-    }
+    return this.get("page") === this.get("totalPages");
   }.property("page", "totalPages"),
 
   isAuthenticated: function() {
-    return !Ember.isEmpty(this.get("controllers.login.currentUser"));
-  }.property("controllers.login.currentUser"),
+    return !Ember.isEmpty(this.get("loginController.currentUser"));
+  }.property("loginController.currentUser"),
 
   currentUser: function() {
     if (this.get("isAuthenticated")) {
-      return this.store.find("user", this.get("controllers.login.currentUser"));
+      return this.store.find("user", this.get("loginController.currentUser"));
     }
-  }.property("isAuthenticated","controllers.login.currentUser"),
+  }.property("isAuthenticated","loginController.currentUser"),
 
 
   actions: {
     transToCommentMode: function(atWho) {
-      this.set("controllers.editor.isCreateComment", true);
+      this.set("editorController.isCreateComment", true);
 
-      this.set("controllers.editor.modalTitle", "Create your new comment");
-      this.set("controllers.editor.createMode", "createComment");
-      this.set("controllers.editor.buttonContent", "Create");
-      this.set("controllers.editor.buttonLoadContent", "Creating");
+      this.set("editorController.modalTitle", "Create your new comment");
+      this.set("editorController.createMode", "createComment");
+      this.set("editorController.buttonContent", "Create");
+      this.set("editorController.buttonLoadContent", "Creating");
 
       //reset error message.
-      this.set("controllers.editor.hasError", false);
-      this.set("controllers.editor.post", this.get("post"));
+      this.set("editorController.hasError", false);
+      this.set("editorController.post", this.get("post"));
 
       if (Ember.isEmpty(atWho)) {
 
-      //reset editor's input 
+      //reset editor's input
       Ember.$("textarea.comment-editor").val("");
       } else {
 
-        // for the first time editor load, 
+        // for the first time editor load,
         // and the textarea element did't insert in DOM.
-        // use posts.new controller to send the atWho value to 
+        // use posts.new controller to send the atWho value to
         // custom-textarea view.
-        this.set("controllers.editor.atWho", atWho);
+        this.set("editorController.atWho", atWho);
 
         Ember.$("textarea.comment-editor").val("@" + atWho + " ");
       }
@@ -69,7 +68,7 @@ export default Ember.ArrayController.extend({
       this.get("model").forEach(function(item) {
         atwhoUserId.push(item.get("user_id"));
         atwhoUserName.push(item.get("commentUserName"));
-      }); 
+      });
 
       atwhoUserId = atwhoUserId.uniq();
       atwhoUserName = atwhoUserName.uniq();
@@ -79,16 +78,13 @@ export default Ember.ArrayController.extend({
         atwhoItems.push({name: atwhoUserName[i], id: atwhoUserId[i] });
       }
 
-      this.set("controllers.editor.atwhoItems", atwhoItems); 
+      this.set("editorController.atwhoItems", atwhoItems);
 
 
         Ember.$("textarea.comment-editor").atwho({
           at: "@",
           data: atwhoItems
         });
-
-
-
     },
 
     loadMore: function() {
@@ -116,9 +112,8 @@ export default Ember.ArrayController.extend({
     },
 
     deleteComment: function(comment) {
-      this.set("controllers.delete-confirm.deleteMode", "deleteComment");
-      this.set("controllers.delete-confirm.comment", comment);
+      this.set("deleteConfirmController.deleteMode", "deleteComment");
+      this.set("deleteConfirmController.comment", comment);
     },
-
   }
 });

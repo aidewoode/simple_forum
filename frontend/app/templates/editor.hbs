@@ -9,7 +9,7 @@
     </div>
     <div class="modal-body">
       <div class="container-fluid custom-editor">
-        <form {{action createMode on="submit"}} class="form-horizontal">
+        <form {{action "createResource" createMode on="submit"}} class="form-horizontal">
         {{#if isCreateComment}}
         <div class="form-group">
           <div class="col-sm-12" role="tabpanel">

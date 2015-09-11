@@ -1,13 +1,13 @@
 import Ember from "ember";
 
 export default Ember.Controller.extend({
-  needs: "login",
+  loginController: Ember.inject.controller("login"),
 
   currentUser: function() {
-    if (!Ember.isEmpty(this.get("controllers.login.currentUser"))) {
-      return this.store.find("user", this.get("controllers.login.currentUser"));
+    if (!Ember.isEmpty(this.get("loginController.currentUser"))) {
+      return this.store.find("user", this.get("loginController.currentUser"));
     }
-  }.property("controllers.login.currentUser"),
+  }.property("loginController.currentUser"),
 
   actions: {
     transToPost: function(notification) {
@@ -21,7 +21,6 @@ export default Ember.Controller.extend({
 
     removeNoti: function(notification) {
       notification.destroyRecord();
-    } 
-
+    }
   }
 });

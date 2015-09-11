@@ -30,7 +30,6 @@ export default Ember.Controller.extend({
   },
 
   actions:{
-    
     login: function() {
       var btn = Ember.$("#loginButton").button("loading");
       var self = this;
@@ -69,7 +68,6 @@ export default Ember.Controller.extend({
         }
       });
 
-                                         
     }
   }
 

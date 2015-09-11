@@ -1,13 +1,17 @@
 import Ember from "ember";
 
 export default Ember.Controller.extend({
-  needs: ["post/comments"],
+  postCommentsController: Ember.inject.controller("post.comments"),
 
   deleteMode: null,
   post: null,
   comment: null,
 
   actions: {
+    deleteResource: function(mode) {
+      this.send(mode);
+    },
+
     deletePost: function() {
       var self = this;
       var btn = Ember.$("#deleteButton").button("loading");
@@ -17,7 +21,6 @@ export default Ember.Controller.extend({
         btn.button("reset");
         Ember.$("#delete-confirm").modal("hide");
         self.transitionToRoute("index");
-        
       });
     },
 
@@ -25,18 +28,16 @@ export default Ember.Controller.extend({
       var self = this;
 
       var btn = Ember.$("#deleteButton").button("loading");
-      var commentArray = this.get("controllers.post/comments.commentArray");
+      var commentArray = this.get("postCommentsController.commentArray");
       var comment = this.get("comment");
 
       comment.destroyRecord().then(function() {
         btn.button("reset");
         Ember.$("#delete-confirm").modal("hide");
         commentArray.removeObject(comment);
-        var commentsCount = self.get("controllers.post/comments.commentsCount");
-        self.set("controllers.post/comments.commentsCount", commentsCount -1);
-
+        var commentsCount = self.get("postCommentsController.commentsCount");
+        self.set("postCommentsController.commentsCount", commentsCount -1);
       });
-    
     },
   }
 });

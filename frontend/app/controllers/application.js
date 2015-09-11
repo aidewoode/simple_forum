@@ -1,43 +1,45 @@
 import Ember from "ember";
 
 export default Ember.Controller.extend({
-  needs: ["login", "signup", "editor"],
+  loginController: Ember.inject.controller("login"),
+  signupController: Ember.inject.controller("signup"),
+  editorController: Ember.inject.controller("editor"),
 
   currentUser: function() {
-    if (!Ember.isEmpty(this.get("controllers.login.currentUser"))) {
-      return this.store.find("user", this.get("controllers.login.currentUser"));
+    if (!Ember.isEmpty(this.get("loginController.currentUser"))) {
+      return this.store.find("user", this.get("loginController.currentUser"));
     }
-  }.property("controllers.login.currentUser"),
+  }.property("loginController.currentUser"),
 
   isAuthenticated: function() {
-    return !Ember.isEmpty(this.get("controllers.login.currentUser"));
-  }.property("controllers.login.currentUser"),
+    return !Ember.isEmpty(this.get("loginController.currentUser"));
+  }.property("loginController.currentUser"),
 
   actions: {
     transToPostMode: function() {
-      this.set("controllers.editor.isCreateComment", false);
+      this.set("editorController.isCreateComment", false);
 
-      this.set("controllers.editor.modalTitle", "Create your new post");
-      this.set("controllers.editor.createMode", "createPost");
-      this.set("controllers.editor.buttonContent", "Create");
-      this.set("controllers.editor.buttonLoadContent", "Creating");
+      this.set("editorController.modalTitle", "Create your new post");
+      this.set("editorController.createMode", "createPost");
+      this.set("editorController.buttonContent", "Create");
+      this.set("editorController.buttonLoadContent", "Creating");
 
       // reset error message
-      this.set("controllers.editor.hasError", false);
+      this.set("editorController.hasError", false);
       // reset editor's content
-      this.set("controllers.editor.tag", null);
-      this.set("controllers.editor.title", null);
+      this.set("editorController.tag", null);
+      this.set("editorController.title", null);
       Ember.$("textarea.post-editor").val("");
     },
 
     logOut: function() {
-      this.set("controllers.login.token", null); 
-      this.set("controllers.login.currentUser", null);
+      this.set("loginController.token", null);
+      this.set("loginController.currentUser", null);
     },
 
     resetErrorMessage: function(item) {
-      this.set("controllers."+ item +".hasError", false);
-    } 
+      this.set(item +"Controller.hasError", false);
+    }
 
   }
 });

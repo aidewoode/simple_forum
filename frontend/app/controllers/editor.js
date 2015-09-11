@@ -2,7 +2,9 @@ import Ember from "ember";
 /* global marked */
 
 export default Ember.Controller.extend({
-  needs: ["index", "post/comments", "post"],
+  indexController: Ember.inject.controller("index"),
+  postCommentsController: Ember.inject.controller("post.comments"),
+  postController: Ember.inject.controller("post"),
 
   selectContent: ["test1", "test2", "test3", "test4"],
 
@@ -37,46 +39,48 @@ export default Ember.Controller.extend({
                                                    this.get("atwhoItems")[i]["id"] +
                                                    "/posts\">@<span>" +
                                                    matchString +
-                                                   "</span></a>" 
+                                                   "</span></a>"
                                                  );
             }
           }
-          
         }
         position = inputContent.indexOf("@", position + 1);
       }
 
       var outputContent = marked(inputContent);
       Ember.$("div.editor-preview").html(outputContent);
-
     },
-    
+
+    createResource: function(mode) {
+      this.send(mode);
+    },
+
     createPost: function() {
       this.send("mdPreview");
 
       var self = this;
-      var btn = Ember.$("#createButton").button("loading"); 
+      var btn = Ember.$("#createButton").button("loading");
       var post = this.store.createRecord("post", {
         title: this.get("title") ,
         body: Ember.$("div.editor-preview").html(),
         tag: this.get("tag")
-      }); 
+      });
 
      post.save().then(function(record) {
        btn.button("reset");
        Ember.$("#editor").modal("hide");
-       self.get("controllers.index.postArray").unshiftObject(record);
-        // when the the number of posts is less than 10, 
+       self.get("indexController.postArray").unshiftObject(record);
+        // when the the number of posts is less than 10,
         // don't need to remove the last comment
-        // to insure have current pagination for the backend. 
-        if (self.get("controllers.index.postArray.length") > 10) {
+        // to insure have current pagination for the backend.
+        if (self.get("indexController.postArray.length") > 10) {
 
-          self.get("controllers.index.postArray").popObject();
+          self.get("indexController.postArray").popObject();
 
           //when the number of posts is 11 and the totalPages didn't change.
           //set the index's totalPages to 2, let the user can load next page.
-          if (self.get("controllers.index.totalPages") === 1) {
-            self.set("controllers.index.totalPages", 2);
+          if (self.get("indexController.totalPages") === 1) {
+            self.set("indexController.totalPages", 2);
           }
         }
 
@@ -92,7 +96,7 @@ export default Ember.Controller.extend({
     createComment: function() {
 
       //to be sure the div.editor-preview element
-      //have content. 
+      //have content.
       this.send("mdPreview");
 
       var atwhoElements = document.querySelectorAll(".editor-preview a.atwho");
@@ -102,11 +106,9 @@ export default Ember.Controller.extend({
       for (var i = 0; i < atwhoElements.length; i++) {
         var id = atwhoElements[i].dataset.userid;
         atwhoIds.push(id);
-
-        }
-      
+      }
       var self = this;
-      var btn = Ember.$("#createButton").button("loading"); 
+      var btn = Ember.$("#createButton").button("loading");
       var comment = this.store.createRecord("comment", {
         body: Ember.$("div.editor-preview").html(),
         post: self.get("post"),
@@ -130,29 +132,29 @@ export default Ember.Controller.extend({
         var commentObject = Ember.Object.create(response.comment);
 
         // have some problem here, need to fixed
-        self.get("controllers.post/comments.commentArray").unshiftObject(commentObject);
+        self.get("postCommentsController.commentArray").unshiftObject(commentObject);
 
 
-        //increase commentsCount's value 
-        self.set("controllers.post.model.commentsCount", self.get("controllers.post.model.commentsCount") + 1);
+        //increase commentsCount's value
+        self.set("postController.model.commentsCount", self.get("controllers.post.model.commentsCount") + 1);
 
-        // when a post's commentsCount less than 10, 
+        // when a post's commentsCount less than 10,
         // don't need to remove the last comment
-        // to insure have current pagination for the backend. 
-        if (self.get("controllers.post.model.commentsCount") > 10) {
+        // to insure have current pagination for the backend.
+        if (self.get("postController.model.commentsCount") > 10) {
 
-          self.get("controllers.post/comments.commentArray").popObject();
+          self.get("postCommentsController.commentArray").popObject();
 
           //when a post's commentsCount is 11 and the totalPages didn't change.
           //set the comments's totalPages to 2, let the user can load next page.
-          if (self.get("controllers.post/comments.totalPages") === 1) {
-            self.set("controllers.post/comments.totalPages", 2);
+          if (self.get("postCommentsController.totalPages") === 1) {
+            self.set("postCommentsController.totalPages", 2);
           }
         }
 
-        // because of didn't use save() to persist 
-        // the comment, so there will be have a useless 
-        // comment record , so have to delete it. 
+        // because of didn't use save() to persist
+        // the comment, so there will be have a useless
+        // comment record , so have to delete it.
         comment.deleteRecord();
 
       },function(error) {
@@ -177,15 +179,12 @@ export default Ember.Controller.extend({
       post.save().then(function(){
         btn.button("reset");
         Ember.$("#editor").modal("hide");
-        
       },function(error){
         post.rollback();
         self.set("errorMessage", error.responseJSON.errors);
         self.set("hasError", true);
         btn.button("reset");
       } );
-      
     }
-
   }
 });
