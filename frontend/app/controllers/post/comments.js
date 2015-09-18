@@ -65,7 +65,7 @@ export default Ember.Controller.extend({
       var atwhoUserId = [];
       var atwhoUserName = [];
       var atwhoItems = [];
-      this.get("model").forEach(function(item) {
+      this.get("commentArray").forEach(function(item) {
         atwhoUserId.push(item.get("user_id"));
         atwhoUserName.push(item.get("commentUserName"));
       });

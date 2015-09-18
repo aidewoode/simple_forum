@@ -19,7 +19,7 @@
             </ul>
             <div class="tab-content">
               <div role="tabpanel" class="tab-pane active" id="edit" >
-                {{view "custom-textarea" class="form-control editor comment-editor" rows="15" atwhoItems=atwhoItems atWho=atWho}}
+                {{custom-textarea mode="comment-editor" atwhoItems=atwhoItems atWho=atWho}}
               </div>
                 <div role="tabpanel" class="tab-pane" id="preview" >
                   <div class="editor-preview entry">
@@ -46,7 +46,7 @@
               </ul>
               <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="edit" >
-                  {{view "custom-textarea" class="form-control editor post-editor" rows="15" }}
+                  {{custom-textarea mode="post-editor"}}
                 </div>
                 <div role="tabpanel" class="tab-pane" id="preview" >
                   <div class="editor-preview entry">

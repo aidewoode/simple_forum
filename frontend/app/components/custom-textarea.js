@@ -1,10 +1,6 @@
 import Ember from "ember";
 
-export default Ember.TextArea.extend({
-
-  atwhoItems: null,
-  atWho: null,
-
+export default Ember.Component.extend({
   didInsertElement: function() {
     this._super();
     Ember.run.scheduleOnce("afterRender", this, this.afterRenderEvent);
