@@ -111,9 +111,9 @@ export default Ember.Controller.extend({
       });
     },
 
-    deleteComment: function(comment) {
-      this.set("deleteConfirmController.deleteMode", "deleteComment");
-      this.set("deleteConfirmController.comment", comment);
-    },
+    setDeleteMode: function(mode, item) {
+      this.set("deleteMode", mode);
+      this.set("deleteItem", item);
+    }
   }
 });

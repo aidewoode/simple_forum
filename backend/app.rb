@@ -309,7 +309,7 @@ post "/users" do
     user_hash.store("token", user.session_active_token)
     halt 201, json({user: user_hash})
   else
-    halt 422 ,json({errors: user.errors.full_messages[0]})
+    halt 422 ,json({errors: {error: user.errors.full_messages[0]}})
   end
 end
 

@@ -21,7 +21,7 @@
 
     {{#if currentUser.admin}}
     <span>. </span>
-    <a href="#" {{action "deletePost" model}} data-toggle="modal" data-target="#delete-confirm">
+    <a href="#" {{action "setDeleteMode" "deletePost" model}} data-toggle="modal" data-target="#delete-confirm">
       <span class="glyphicon glyphicon-trash delete-icon" aria-hidden="true"></span>
     </a>
     {{/if}}

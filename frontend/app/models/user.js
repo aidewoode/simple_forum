@@ -15,5 +15,4 @@ export default DS.Model.extend({
   posts: DS.hasMany("post", {async: true}),
   comments: DS.hasMany("comment", {async: true}),
   notifications: DS.hasMany("notification", {async: true}),
-
 });

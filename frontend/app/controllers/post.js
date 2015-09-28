@@ -1,23 +1,17 @@
 import Ember from "ember";
 
 export default Ember.Controller.extend({
-  loginController: Ember.inject.controller("login"),
+  applicationController: Ember.inject.controller("application"),
   editorController: Ember.inject.controller("editor"),
   deleteConfirmController: Ember.inject.controller("delete-confirm"),
 
-  isAuthenticated: function() {
-    return !Ember.isEmpty(this.get("loginController.currentUser"));
-  }.property("loginController.currentUser"),
+  isAuthenticated: Ember.computed.alias("applicationController.isAuthenticated"),
 
   isCurrentUser: function() {
-    return this.get("model.user_id").toString() === this.get("loginController.currentUser");
-  }.property("loginController.currentUser", "model.user_id"),
+    return this.get("model.user_id").toString() === this.get("applicationController.currentUserId");
+  }.property("applicationController.currentUser", "model.user_id"),
 
-  currentUser: function() {
-    if (this.get("isAuthenticated")) {
-      return this.store.find("user", this.get("loginController.currentUser"));
-    }
-  }.property("isAuthenticated","loginController.currentUser"),
+  currentUser: Ember.computed.alias("applicationController.currentUser"),
 
   actions: {
     editPost: function() {
@@ -37,13 +31,6 @@ export default Ember.Controller.extend({
       this.set("editorController.tag", this.get("model.tag"));
 
       Ember.$("textarea.post-editor").val(this.get("model.body"));
-
     },
-
-    deletePost: function(post) {
-      this.set("deleteConfirmController.deleteMode", "deletePost");
-      this.set("deleteConfirmController.post", post);
-    }
-
   },
 });

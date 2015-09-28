@@ -1,6 +1,13 @@
 import Ember from "ember";
 
 export default Ember.Route.extend({
+  actions: {
+    setDeleteMode: function(mode, item) {
+      this.controllerFor("application").set("deleteMode", mode);
+      this.controllerFor("application").set("deleteItem", item);
+    }
+  },
+
   model: function(params, transition) {
     var post_id = transition.params.post.id;
     return this.store.query("comment", {page: 1, per_page: 10, post_id: post_id});

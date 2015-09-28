@@ -36,10 +36,10 @@
   {{#if isAuthenticated}}
     {{render "editor"}}
     {{render "notification"}}
-    {{render "delete-confirm"}}
+    {{delete-confirm mode=deleteMode item=deleteItem }}
   {{else}}
-    {{render "signup"}}
-    {{render "login" }}
+    {{signup-form action="signup" applicationController=this}}
+    {{login-form action="login"}}
   {{/if}}
 
   {{outlet}}
