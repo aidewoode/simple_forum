@@ -65,10 +65,13 @@ export default Ember.Controller.extend({
       self.set("postCommentsController.commentsCount", commentsCount - 1);
     },
 
-    transRoute: function(route) {
-      this.transitionToRoute(route);
+    transRoute: function(route, option) {
+      if (typeof option == "undefined") {
+        this.transitionToRoute(route);
+      } else {
+        this.transitionToRoute(route, option);
+      }
     }
-
   }
 
   //actions: {

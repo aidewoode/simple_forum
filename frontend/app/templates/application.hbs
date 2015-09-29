@@ -35,7 +35,7 @@
 
   {{#if isAuthenticated}}
     {{render "editor"}}
-    {{render "notification"}}
+    {{notification-center currentUser=currentUser}}
     {{delete-confirm mode=deleteMode item=deleteItem }}
   {{else}}
     {{signup-form action="signup" applicationController=this}}

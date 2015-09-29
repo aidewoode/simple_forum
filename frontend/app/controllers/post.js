@@ -3,7 +3,6 @@ import Ember from "ember";
 export default Ember.Controller.extend({
   applicationController: Ember.inject.controller("application"),
   editorController: Ember.inject.controller("editor"),
-  deleteConfirmController: Ember.inject.controller("delete-confirm"),
 
   isAuthenticated: Ember.computed.alias("applicationController.isAuthenticated"),
 

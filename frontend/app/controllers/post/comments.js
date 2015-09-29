@@ -4,7 +4,6 @@ export default Ember.Controller.extend({
   loginController: Ember.inject.controller("login"),
   editorController: Ember.inject.controller("editor"),
   postController: Ember.inject.controller("post"),
-  deleteConfirmController: Ember.inject.controller("delete-confirm"),
 
   page: 1,
   postId: null,

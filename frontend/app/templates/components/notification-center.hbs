@@ -14,27 +14,22 @@
     </div>
     <div class="modal-body">
       <div class="user-notifications">
-      <ul class="list-group">
-        {{#each currentUser.notifications as |noti|}}
-        <li class="list-group-item {{if noti.read "disabled"}}">
-          <span {{action "removeNoti" noti}}class="glyphicon glyphicon-remove pull-right remove"></span>
+        <ul class="list-group">
+          {{#each currentUser.notifications as |noti|}}
+          <li class="list-group-item {{if noti.read "disabled"}}">
+            <span {{action "removeNoti" noti}}class="glyphicon glyphicon-remove pull-right remove"></span>
             {{#if noti.atwho}}
             你在文章<span {{action "transToPost" noti}}>{{noti.post_name}}</span>的回复，被{{noti.user_name}}@了
             {{else}}
             你的文章<span {{action "transToPost" noti}}>{{noti.post_name}}</span>，被{{noti.user_name}}回复了
             {{/if}}
           </li>
-        {{/each}}
-      </ul>
+          {{/each}}
+        </ul>
       </div>
     </div>
     <div class="modal-footer">
-      
     </div>
-    
   </div>
-  
 </div>
-  
 </div>
-
