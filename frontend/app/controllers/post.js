@@ -2,7 +2,6 @@ import Ember from "ember";
 
 export default Ember.Controller.extend({
   applicationController: Ember.inject.controller("application"),
-  editorController: Ember.inject.controller("editor"),
 
   isAuthenticated: Ember.computed.alias("applicationController.isAuthenticated"),
 
@@ -14,22 +13,8 @@ export default Ember.Controller.extend({
 
   actions: {
     editPost: function() {
-      this.set("editorController.isCreateComment", false);
-
-      this.set("editorController.modalTitle", "Update your post");
-      this.set("editorController.createMode", "updatePost");
-      this.set("editorController.buttonContent", "Update");
-      this.set("editorController.buttonLoadContent", "Updating");
-
-      this.set("editorController.post", this.get("model"));
-
-      // reset error message
-      this.set("editorController.hasError", false);
-
-      this.set("editorController.title", this.get("model.title"));
-      this.set("editorController.tag", this.get("model.tag"));
-
-      Ember.$("textarea.post-editor").val(this.get("model.body"));
+      this.get("applicationController").set("createMode","updatePost");
+      this.get("applicationController"). set("createItem", this.get("model"));
     },
   },
 });

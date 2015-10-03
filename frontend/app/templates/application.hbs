@@ -34,7 +34,7 @@
 <section class="index">
 
   {{#if isAuthenticated}}
-    {{render "editor"}}
+    {{custom-editor createMode=createMode applicationController=this createItem=createItem}}
     {{notification-center currentUser=currentUser}}
     {{delete-confirm mode=deleteMode item=deleteItem }}
   {{else}}

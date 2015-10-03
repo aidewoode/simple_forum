@@ -9,7 +9,7 @@
     </div>
     <div class="modal-body">
       <div class="container-fluid custom-editor">
-        <form {{action "createResource" createMode on="submit"}} class="form-horizontal">
+        <form {{action "createResource" on="submit"}} class="form-horizontal">
         {{#if isCreateComment}}
         <div class="form-group">
           <div class="col-sm-12" role="tabpanel">
@@ -19,7 +19,7 @@
             </ul>
             <div class="tab-content">
               <div role="tabpanel" class="tab-pane active" id="edit" >
-                {{custom-textarea mode="comment-editor" atwhoItems=atwhoItems atWho=atWho}}
+                {{custom-textarea mode="comment-editor" atwhoItems=atwhoItems }}
               </div>
                 <div role="tabpanel" class="tab-pane" id="preview" >
                   <div class="editor-preview entry">

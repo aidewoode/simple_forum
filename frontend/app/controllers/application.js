@@ -4,6 +4,7 @@ import Ember from "ember";
 export default Ember.Controller.extend({
   // need change, don't need controller anymore.
   postCommentsController: Ember.inject.controller("post.comments"),
+  indexController: Ember.inject.controller("index"),
   //
   token: Cookies.get("access_token"),
   currentUserId: Cookies.get("auth_user"),
@@ -71,6 +72,10 @@ export default Ember.Controller.extend({
       } else {
         this.transitionToRoute(route, option);
       }
+    },
+
+    transToPostMode: function() {
+      this.set("createMode", "createPost");
     }
   }
 

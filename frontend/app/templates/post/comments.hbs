@@ -16,7 +16,7 @@
     <li class="comment list-group-item">
       {{#if isAuthenticated}}
       <div class="pull-right reply">
-        <a href="#" {{action "transToCommentMode" comment.commentUserName}} data-toggle="modal" data-target="#editor">
+        <a href="#" {{action "transToCommentMode"}} data-toggle="modal" data-target="#editor" data-comment-user={{comment.commentUserName}}>
           <span class="glyphicon glyphicon-menu-down" aria-label="reply" aria-hidden="true"></span>
         </a> 
       </div>

@@ -5,7 +5,7 @@ export default Ember.Route.extend({
     setDeleteMode: function(mode, item) {
       this.controllerFor("application").set("deleteMode", mode);
       this.controllerFor("application").set("deleteItem", item);
-    }
+    },
   },
 
   model: function(params, transition) {

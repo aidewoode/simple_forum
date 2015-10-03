@@ -1,8 +1,7 @@
 import Ember from "ember";
 
 export default Ember.Controller.extend({
-  loginController: Ember.inject.controller("login"),
-  editorController: Ember.inject.controller("editor"),
+  applicationController: Ember.inject.controller("application"),
   postController: Ember.inject.controller("post"),
 
   page: 1,
@@ -22,68 +21,14 @@ export default Ember.Controller.extend({
     return this.get("page") === this.get("totalPages");
   }.property("page", "totalPages"),
 
-  isAuthenticated: function() {
-    return !Ember.isEmpty(this.get("loginController.currentUser"));
-  }.property("loginController.currentUser"),
-
-  currentUser: function() {
-    if (this.get("isAuthenticated")) {
-      return this.store.find("user", this.get("loginController.currentUser"));
-    }
-  }.property("isAuthenticated","loginController.currentUser"),
+  isAuthenticated: Ember.computed.alias("applicationController.isAuthenticated"),
+  currentUser: Ember.computed.alias("applicationController.currentUser"),
 
 
   actions: {
-    transToCommentMode: function(atWho) {
-      this.set("editorController.isCreateComment", true);
-
-      this.set("editorController.modalTitle", "Create your new comment");
-      this.set("editorController.createMode", "createComment");
-      this.set("editorController.buttonContent", "Create");
-      this.set("editorController.buttonLoadContent", "Creating");
-
-      //reset error message.
-      this.set("editorController.hasError", false);
-      this.set("editorController.post", this.get("post"));
-
-      if (Ember.isEmpty(atWho)) {
-
-      //reset editor's input
-      Ember.$("textarea.comment-editor").val("");
-      } else {
-
-        // for the first time editor load,
-        // and the textarea element did't insert in DOM.
-        // use posts.new controller to send the atWho value to
-        // custom-textarea view.
-        this.set("editorController.atWho", atWho);
-
-        Ember.$("textarea.comment-editor").val("@" + atWho + " ");
-      }
-
-      var atwhoUserId = [];
-      var atwhoUserName = [];
-      var atwhoItems = [];
-      this.get("commentArray").forEach(function(item) {
-        atwhoUserId.push(item.get("user_id"));
-        atwhoUserName.push(item.get("commentUserName"));
-      });
-
-      atwhoUserId = atwhoUserId.uniq();
-      atwhoUserName = atwhoUserName.uniq();
-
-
-      for (var i = 0; i < atwhoUserId.length; i++) {
-        atwhoItems.push({name: atwhoUserName[i], id: atwhoUserId[i] });
-      }
-
-      this.set("editorController.atwhoItems", atwhoItems);
-
-
-        Ember.$("textarea.comment-editor").atwho({
-          at: "@",
-          data: atwhoItems
-        });
+    transToCommentMode: function() {
+      this.get("applicationController").set("createMode", "createComment");
+      this.get("applicationController").set("createItem", this.get("post"));
     },
 
     loadMore: function() {
@@ -108,11 +53,6 @@ export default Ember.Controller.extend({
         self.set("totalPages", response.meta.total_pages);
         btn.button("reset");
       });
-    },
-
-    setDeleteMode: function(mode, item) {
-      this.set("deleteMode", mode);
-      this.set("deleteItem", item);
     }
   }
 });

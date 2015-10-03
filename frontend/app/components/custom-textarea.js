@@ -11,9 +11,5 @@ export default Ember.Component.extend({
         at: "@",
         data: this.get("atwhoItems")
       });
-
-      if (!Ember.isEmpty(this.get("atWho"))) {
-        Ember.$("textarea.comment-editor").val("@" + this.get("atWho") + " ");
-      }
   }
 });
