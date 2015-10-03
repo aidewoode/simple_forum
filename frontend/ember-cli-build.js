@@ -6,17 +6,6 @@ module.exports = function(defaults) {
     // Add options here
   });
 
-  app.import("bower_components/bootstrap/dist/css/bootstrap.css");
-  app.import("bower_components/Entry.css/bin/entry.css");
-  app.import("bower_components/At.js/dist/css/jquery.atwho.css");
-
-  app.import("bower_components/bootstrap/dist/js/bootstrap.js");
-  app.import("bower_components/moment/moment.js");
-  app.import("bower_components/js-cookie/src/js.cookie.js");
-  app.import("bower_components/marked/lib/marked.js");
-  app.import("bower_components/Caret.js/dist/jquery.caret.js");
-  app.import("bower_components/At.js/dist/js/jquery.atwho.js");
-
   // Use `app.import` to add additional libraries to the generated
   // output files.
   //

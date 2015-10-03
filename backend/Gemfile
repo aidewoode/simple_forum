@@ -1,25 +1,22 @@
-# Gemfile
-source "https://rubygems.org" 
+source 'https://rubygems.org'
 
-gem "sinatra"
-gem "activerecord"
-gem "sinatra-activerecord"
-gem "bcrypt"
-gem "thin"
-gem "tux"
-gem "will_paginate"
-gem "carrierwave"
-gem "carrierwave-qiniu"
-gem "rack-flash3"
-gem "i18n"
-gem "sanitize"
-gem "mini_magick"
+# Project requirements
+gem 'rake'
 
-group :development do
-  gem "sqlite3"
-  gem "shotgun"
-end
+# Component requirements
+gem 'slim'
 
-group :production do
-  gem "pg"
-end
+# DataBase
+gem 'pg'
+gem 'sequel'
+
+# Test requirements
+gem 'rspec', :group => 'test'
+gem 'rack-test', :require => 'rack/test', :group => 'test'
+
+# Padrino Stable Gem
+gem 'padrino', '0.12.5'
+
+# generate JSON API
+gem 'rabl'
+gem 'oj'
