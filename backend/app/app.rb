@@ -5,6 +5,19 @@ module Backend
 
     enable :sessions
 
+    # set all content_type to json api
+    before do
+      unless request.accept?("application/vnd.api+json")
+        halt 406, "Not Acceptable"
+      end
+
+      if ["POST", "PATCH"].include?(request.request_method) && request.media_type != "application/vnd.api+json"
+        halt 415, "Unsupported Media Type"
+      end
+
+      content_type "application/vnd.api+json"
+    end
+
     ##
     # Caching support.
     #
