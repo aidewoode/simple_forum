@@ -3,20 +3,36 @@ source 'https://rubygems.org'
 # Project requirements
 gem 'rake'
 
-# Component requirements
-gem 'slim'
-
 # DataBase
 gem 'pg'
 gem 'sequel'
 
-# Test requirements
-gem 'rspec', :group => 'test'
-gem 'rack-test', :require => 'rack/test', :group => 'test'
-
 # Padrino Stable Gem
 gem 'padrino', '0.12.5'
 
-# generate JSON API
+# Generate JSON API
 gem 'rabl'
 gem 'oj'
+
+# Possword secure
+gem 'bcrypt'
+
+# JSON Web Token
+gem 'jwt'
+
+# CORS
+gem 'rack-cors', require: 'rack/cors'
+
+group :development do
+  # Code style
+  gem 'rubocop', require: false
+
+  # Better errors
+  gem 'better_errors'
+  gem 'binding_of_caller'
+end
+
+group :test do
+  gem 'rspec'
+  gem 'rack-test', require: 'rack/test'
+end

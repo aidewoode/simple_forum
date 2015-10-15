@@ -7,15 +7,21 @@ module Backend
 
     # set all content_type to json api
     before do
-      unless request.accept?("application/vnd.api+json")
-        halt 406, "Not Acceptable"
+      unless request.accept?('application/vnd.api+json')
+        halt 406, 'Not Acceptable'
       end
 
-      if ["POST", "PATCH"].include?(request.request_method) && request.media_type != "application/vnd.api+json"
-        halt 415, "Unsupported Media Type"
+      if %w(POST PATCH).include?(request.request_method) && request.media_type != 'application/vnd.api+json'
+        halt 415, 'Unsupported Media Type'
       end
 
-      content_type "application/vnd.api+json"
+      content_type 'application/vnd.api+json'
+    end
+
+    configure :development do
+      # config better_error
+      use BetterErrors::Middleware
+      BetterErrors.application_root = __dir__
     end
 
     ##
@@ -44,7 +50,8 @@ module Backend
     # set :raise_errors, true       # Raise exceptions (will stop application) (default for test)
     # set :dump_errors, true        # Exception backtraces are written to STDERR (default for production/development)
     # set :show_exceptions, true    # Shows a stack trace in browser (default for development)
-    # set :logging, true            # Logging in STDOUT for development and file for production (default only for development)
+    # set :logging, true            # Logging in STDOUT for development and file for production
+    #                                 (default only for development)
     # set :public_folder, 'foo/bar' # Location for static assets (default root/public)
     # set :reload, false            # Reload application files (default in development)
     # set :default_builder, 'foo'   # Set a custom form builder (default 'StandardFormBuilder')

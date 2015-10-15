@@ -1,4 +1,4 @@
 require 'spec_helper'
 
-RSpec.describe User do
+RSpec.describe '/users' do
 end

@@ -6,7 +6,7 @@ node(:type) { "posts" }
 node :attributes do |post|
   {
     title: post.title,
-    body: post.body,
-    tag: post.tag
+    body:  post.body,
+    tag:   post.tag
   }
 end

@@ -1,48 +1,38 @@
-Backend::App.controllers :posts do
+Backend::App.controllers :posts, map: '/posts' do
   get :index do
     @posts = Post.all
-    render "posts/index"
+    render 'posts/index'
   end
 
-  get :show, map: "/posts/:id" do
+  get :show, map: ':id' do
     @post = Post[params[:id]]
-    if @post
-      render "posts/show"
-    else
-      halt 404
-    end
+    halt 404 unless @post
+
+    status 200
+    render 'posts/show'
   end
 
-  post :new, map: "/posts" do
+  post :new, map: '' do
     @post = create_source :post
-    if @post
-      status 201
-      render "posts/show"
-    else
-      halt 403
-    end
+    halt 403 unless @post
+
+    status 201
+    render 'posts/show'
   end
 
-  patch :update, map: "/posts/:id" do
+  patch :update, map: ':id' do
     post = Post[params[:id]]
     halt 404 unless post
+    halt 403 unless update_source post
 
-    if update_source post
-      status 200
-    else
-      halt 403
-    end
+    status 200
   end
 
-  delete :destroy, map: "/posts/:id" do
+  delete :destroy, map: ':id' do
     post = Post[params[:id]]
     halt 404 unless post
+    halt 403 unless post.destroy
 
-    if post.destroy
-      status 200
-    else
-      halt 403
-    end
+    status 200
   end
-
 end
