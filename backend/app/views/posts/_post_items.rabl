@@ -7,6 +7,9 @@ node :attributes do |post|
   {
     title: post.title,
     body:  post.body,
-    tag:   post.tag
+    tag:   post.tag,
+    created_at: post.created_at,
+    updated_at: post.updated_at,
+    comments_count: post.comments.count
   }
 end

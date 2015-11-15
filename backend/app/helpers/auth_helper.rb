@@ -4,7 +4,8 @@ module Backend
   class App
     module AuthHelper
       def generate_jwt(user)
-        @token = JWT.encode({data: user.email}, ENV['AUTH_SECRET_KEY'], 'HS256')
+        exp_time = Time.now.to_i + 24 * 3600
+        @token = JWT.encode({ data: user.email, exp: exp_time }, ENV['AUTH_SECRET_KEY'], 'HS256')
       end
     end
 
