@@ -1,15 +1,10 @@
-import DS from "ember-data";
-export default DS.Model.extend({
-  body: DS.attr("string"),
-  created_at: DS.attr("date"),
-  updated_at: DS.attr("date"),
-  userAvatar: DS.attr("string"),
-  commentUserName: DS.attr("string"),
-  commentPostName: DS.attr("string"),
-  user_id: DS.attr("number"),
+import DS from 'ember-data';
 
-  post: DS.belongsTo("post",{async: true}),
-  user: DS.belongsTo("user", {async: true}),
-  notifications: DS.hasMany("notification"),
-  
+export default DS.Model.extend({
+  body:      DS.attr('string'),
+  createdAt: DS.attr('date'),
+  updatedAt: DS.attr('date'),
+
+  post:      DS.belongsTo('post'),
+  user:      DS.belongsTo('user')
 });

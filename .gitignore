@@ -1,5 +1,13 @@
-
 .DS_Store
+
+backend/log/**/*
+backend/tmp/**/*
+backend/vendor/gems/*
+backend/!vendor/gems/cache/
+backend/db/*.db
+backend/.*.sw*
+backend/public/system
+backend/public/uploads
 
 frontend/dist
 frontend/tmp
@@ -11,19 +19,3 @@ frontend/coverage/*
 frontend/libpeerconnection.log
 frontend/npm-debug.log
 frontend/testem.log
-frontend/.DS_Store
-
-backend/.bundle
-backend/db/.*sqlite3
-backend/log/*.log
-backend/tmp
-backend/tags
-backend/public/uploads/tmp
-backend/doc/
-backend/*.swp
-backend/*~
-backend/.DS_Store
-backend/.project
-backend/.idea
-backend/*.db
-backend/.ruby-version

@@ -1,0 +1,12 @@
+.btn {
+  color: $main-color;
+  border: none;
+  outline: none;
+}
+
+.btn__primary {
+  border: 2px solid currentColor;
+  background-color: transparent;
+  border-radius: .28rem;
+  padding: .15rem .9rem;
+}

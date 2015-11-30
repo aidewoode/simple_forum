@@ -1,25 +1,46 @@
-# Gemfile
-source "https://rubygems.org" 
+source 'https://rubygems.org'
 
-gem "sinatra"
-gem "activerecord"
-gem "sinatra-activerecord"
-gem "bcrypt"
-gem "thin"
-gem "tux"
-gem "will_paginate"
-gem "carrierwave"
-gem "carrierwave-qiniu"
-gem "rack-flash3"
-gem "i18n"
-gem "sanitize"
-gem "mini_magick"
+# Project requirements
+gem 'rake'
+
+# DataBase
+gem 'pg'
+gem 'sequel'
+
+# Padrino Stable Gem
+gem 'padrino', '0.12.5'
+
+# Generate JSON API
+gem 'rabl'
+gem 'oj'
+
+# Possword secure
+gem 'bcrypt'
+
+# JSON Web Token
+gem 'jwt'
+
+# CORS
+gem 'rack-cors', require: 'rack/cors'
+
+# File upload
+gem 'carrierwave', require: 'carrierwave'
+gem 'carrierwave-sequel', require: 'carrierwave/sequel'
+gem 'mini_magick'
+
+# Letter Avatar
+gem 'letter_avatar'
 
 group :development do
-  gem "sqlite3"
-  gem "shotgun"
+  # Code style
+  gem 'rubocop', require: false
+
+  # Better errors
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
-group :production do
-  gem "pg"
+group :test do
+  gem 'rspec'
+  gem 'rack-test', require: 'rack/test'
 end

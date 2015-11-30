@@ -1,49 +1,11 @@
-<nav class="navbar navbar-fixed-top global_nav">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <div class="navbar-brand site_title" >
-        SimpleForum
-      </div>
-    </div>
-    <ul class="nav navbar-nav">
-      <li>{{#link-to "index"}}Home{{/link-to}}</li>
-      <li>{{#link-to "about"}}About{{/link-to}}</li>
-    </ul>
-    {{#if isAuthenticated}}
-    <ul class="nav navbar-nav navbar-right menu-nav">
-      <li class="notification"><a  data-toggle="modal" data-target="#notificationCenter" href="#">
-          <span class="glyphicon glyphicon-bell {{has-notification currentUser.notifications}}" aria-hidden="true"></span>
-        </a></li>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><span class="caret"></span> {{currentUser.name}}</a>
-        <ul class="dropdown-menu" role="menu">
-          <li role="presentation">{{#link-to "user.posts" currentUser  role="menuitem"}}My own page{{/link-to}}</li>
-          <li role="presentation"><a {{action "transToPostMode"}} role="menuitem" href="#" data-toggle="modal" data-target="#editor" >New post</a></li>
-          <li role="presentation"><a {{action "logOut"}} role="menuitem" href="#">Logout</a></li>
-        </ul>
-      </li>
-    </ul>
-    {{else}}
-    <ul class="nav navbar-nav navbar-right">
-      <li><a {{action "resetErrorMessage" "signup"}} href="#" data-toggle="modal" data-target="#signupForm">Signup</a></li>
-      <li><a {{action "resetErrorMessage" "login"}} href="#" data-toggle="modal" data-target="#loginForm">Login</a></li>
-    </ul>
-    {{/if}}
+<nav class='global-nav'>
+  <div class='global-nav__title'>
+    Simple Forum
+  </div>
+  <div class='global-nav__menu'>
+    <button class='btn btn__primary'>Login</button>
   </div>
 </nav>
-<section class="index">
-
-  {{#if isAuthenticated}}
-    {{custom-editor createMode=createMode applicationController=this createItem=createItem}}
-    {{notification-center currentUser=currentUser}}
-    {{delete-confirm mode=deleteMode item=deleteItem }}
-  {{else}}
-    {{signup-form action="signup" applicationController=this}}
-    {{login-form action="login"}}
-  {{/if}}
-
+<div class='site-container'>
   {{outlet}}
-</section>
-<footer class="container-fluid index">
-  <p>SimpleForum. Powered by <a target="_blank" href="http://www.sinatrarb.com">Sinatra</a> and  <a target="_blank" href="http://emberjs.com">Ember.js</a>. Source Code: <a target="_blank" href="https://github.com/aidewoode/simple_forum">Github</a></p>
-</footer>
+</div>

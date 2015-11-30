@@ -1,0 +1,14 @@
+html {
+  box-sizing: border-box;
+  font-size: $default-font-size;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: $default-font-family;
+}

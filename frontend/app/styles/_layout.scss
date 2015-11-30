@@ -1,0 +1,22 @@
+.global-nav {
+  display: flex;
+  padding: 1.2rem 2.2rem;
+  background-color: #fff;
+  align-items: center;
+}
+
+.global-nav__title {
+  color: $main-color;
+  font-size: 1.33rem;
+  font-style: italic;
+}
+
+.global-nav__menu {
+  margin-left: auto;
+}
+
+.site-container {
+  max-width: 850px;
+  margin: auto;
+  margin-top: 2.78rem;
+}
