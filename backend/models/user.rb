@@ -1,5 +1,6 @@
 class User < Sequel::Model
   plugin :validation_helpers
+  mount_uploader :avatar, AvatarUploader
 
   attr_accessor :password_confirmation
   attr_accessor :password
@@ -14,6 +15,16 @@ class User < Sequel::Model
   def before_create
     self.password_digest = BCrypt::Password.create(password)
     super
+  end
+
+  def after_create
+    super
+
+    # generate default avatar
+    File.open(LetterAvatar.generate(name, 100)) do |f|
+      self.avatar = f
+    end
+    save
   end
 
   def validate

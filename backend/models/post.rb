@@ -7,5 +7,6 @@ class Post < Sequel::Model
   def validate
     super
     validates_presence [:title, :body, :tag]
+    validates_includes ['normal', 'top', 'essence'], :category unless new?
   end
 end

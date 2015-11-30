@@ -1,6 +1,9 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    activemodel (4.2.4)
+      activesupport (= 4.2.4)
+      builder (~> 3.1)
     activesupport (4.2.4)
       i18n (~> 0.7)
       json (~> 1.7, >= 1.7.7)
@@ -17,6 +20,15 @@ GEM
       rack (>= 0.9.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    builder (3.2.2)
+    carrierwave (0.10.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
+      mime-types (>= 1.16)
+    carrierwave-sequel (0.1.1)
+      carrierwave
+      sequel
     coderay (1.1.0)
     debug_inspector (0.0.2)
     diff-lcs (1.2.5)
@@ -27,10 +39,12 @@ GEM
     i18n (0.7.0)
     json (1.8.3)
     jwt (1.5.1)
+    letter_avatar (0.1.4)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.25.1)
+    mini_magick (4.3.6)
     minitest (5.8.1)
     moneta (0.7.20)
     oj (2.12.14)
@@ -127,7 +141,11 @@ DEPENDENCIES
   bcrypt
   better_errors
   binding_of_caller
+  carrierwave
+  carrierwave-sequel
   jwt
+  letter_avatar
+  mini_magick
   oj
   padrino (= 0.12.5)
   pg

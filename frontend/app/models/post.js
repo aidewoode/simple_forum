@@ -7,7 +7,10 @@ export default DS.Model.extend({
   createdAt:     DS.attr('date'),
   updatedAt:     DS.attr('date'),
   commentsCount: DS.attr('number'),
+  category:      DS.attr('string'),
+  lastReplyTime: DS.attr('string'),
+  userAvatar:    DS.attr('string'),
 
-  comments:  DS.hasMany('comment'),
-  user:      DS.belongsTo('user')
+  comments:      DS.hasMany('comment'),
+  user:          DS.belongsTo('user')
 });

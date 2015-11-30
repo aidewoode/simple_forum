@@ -6,6 +6,8 @@ backend/vendor/gems/*
 backend/!vendor/gems/cache/
 backend/db/*.db
 backend/.*.sw*
+backend/public/system
+backend/public/uploads
 
 frontend/dist
 frontend/tmp

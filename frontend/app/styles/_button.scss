@@ -1,12 +1,12 @@
 .btn {
-  color: #fff;
+  color: $main-color;
   border: none;
   outline: none;
 }
 
 .btn__primary {
-  border: 2px solid #fff;
+  border: 2px solid currentColor;
   background-color: transparent;
   border-radius: .28rem;
-  padding: .28rem 1.11rem;
+  padding: .15rem .9rem;
 }

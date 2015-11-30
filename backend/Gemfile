@@ -23,6 +23,14 @@ gem 'jwt'
 # CORS
 gem 'rack-cors', require: 'rack/cors'
 
+# File upload
+gem 'carrierwave', require: 'carrierwave'
+gem 'carrierwave-sequel', require: 'carrierwave/sequel'
+gem 'mini_magick'
+
+# Letter Avatar
+gem 'letter_avatar'
+
 group :development do
   # Code style
   gem 'rubocop', require: false
